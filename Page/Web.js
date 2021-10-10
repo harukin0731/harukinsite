@@ -4,14 +4,12 @@ import { Card, CardItem, Thumbnail, Icon, Left, Body } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Entypo } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
-import * as RootNavigation from '../RootNavigation.js';
 
 const CardsMain = [];
 const CardsSub = [];
 var carouselItems=[
-    {title:"Harukin+の稼働予定について",text: "現在Harukin+は停止状態にあります。",image:require("../assets/HK.png"),URL:"404"},
-];
-
+    {image:require("../assets/CardView/jrshikokuDelayEX.png"),  URL:"https://twitter.com/JRSTraInfoEX"},
+]
 export default function Web({navigation}) {
     CardsMain.length ? null :ContentsCardBase(navigation);
     return (
@@ -21,10 +19,10 @@ export default function Web({navigation}) {
                     <View style={{flexDirection:"column",flex:1,height:"100%"}}>
                         <View style={{flex:1,}}/>
                         <View>
-                            <TouchableOpacity onPress={() => navigation.navigate('トップページ')} style={{flexDirection:"row",alignItems:"center"}}>
+                            <div onClick={() => Linking.openURL(".")} style={{flexDirection:"row",alignItems:"center"}}>
                                 <Entypo name="chevron-thin-left" color={"white"} size={25}/>
                                 {wp("100%")< 580 ? <Entypo name="home" color={"white"} size={25}/> : <Text style={{fontSize:20,color:"white"}}>ホームに戻る</Text>}
-                            </TouchableOpacity>  
+                            </div>  
                             <View style={{flex:1}}></View>  
                         </View>
                         <View style={{flex:1,}}/>
@@ -59,33 +57,34 @@ export default function Web({navigation}) {
 }
 
 function ContentsCardBase(navigation){
-    CreateCard(require("../assets/Apps/HKblankApp.png"), () => Linking.openURL("https://plus.haruk.in"), "Harukin+","OSSのHubzillaを独自にカスタマイズしたGoogle+風Fediverse_SNSです。",2)
+    CreateCard(require("../assets/Apps/HKblankApp.png"), () => Linking.openURL("https://plus.haruk.in"), "Harukin+","OSSのHubzillaを独自にカスタマイズしたGoogle+風Fediverse_SNSです。",1)
     CreateCard(require("../assets/Apps/HKblankApp.png"), () => Linking.openURL("https://gitlab.haruk.in"), "Gitlab","GithubのようなOSS Gitサーバー、Gitlabです。",1)
     CreateCard(require("../assets/web/nextcloud.svg"), () => Linking.openURL("https://nexcloud.haruk.in"), "Nexcloud","DropBoxのようなOSSソフトウェア、Nextcloudです。",1)
     CreateCard(require("../assets/web/mattermost.png"), () => Linking.openURL("https://mattermost.haruk.in"), "Mattermost","SlackのようなOSSソフトウェア、Mattermostです。",1)
+    CreateCard(require("../assets/web/JRSD.jpg"), () => Linking.openURL("https://twitter.com/JRSTraInfoEX"), "JR四国非公式列車遅延情報EX","JR四国の列車遅延を超高速にお伝えするTwitterBOTです。",1)
 }
 
 function CreateCard(image, url, name,description, Status){
     CardsMain.push(
-        <TouchableOpacity style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onPress={url}>
+        <div style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onClick={url}>
             {wp("100%")>800?
             <Card>
-                <CardItem cardBody>
+                <CardItem button cardBody>
                     <Image source={image} style={{height: 200, width: null, flex: 1}}/>
                 </CardItem>
-                <CardItem footer>
+                <CardItem button footer>
                     <Text>{name}</Text>
                 </CardItem>
-                <CardItem footer>
+                <CardItem button footer>
                     <Text>{description}</Text>
                 </CardItem>
-                <CardItem footer bordered>
+                <CardItem button footer bordered>
                     {DetectOSStatus(Status)}
                 </CardItem>
             </Card>
             :
             <Card>
-                <CardItem>
+                <CardItem button>
                     <Left>
                         <Thumbnail source={image} />
                         <Body>
@@ -97,7 +96,7 @@ function CreateCard(image, url, name,description, Status){
                 </CardItem>   
             </Card>
             }
-        </TouchableOpacity>
+        </div>
     )
 }
 
@@ -119,18 +118,11 @@ function DetectOSStatus(AS){
 
 function renderItem({item}){
     return (
-        <TouchableOpacity onPress={() => RootNavigation.navigate(item.URL)}>
-            <Card style={{backgroundColor:'floralwhite',borderRadius: 5, Height:hp("30%"),justifyContent: "flex-start",flexDirection:"column-reverse"}}>
-                <CardItem cardBody style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}>
-                    <Image source={item.image} style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}/>
-                </CardItem>
-                <CardItem footer bordered style={{marginTop:"auto"}}>
-                    <Text>{item.text}</Text>
-                </CardItem>
-                <CardItem cardBody style={{marginTop:"auto"}}>
-                    <Text style={{fontSize: 20,margin:8}}>{item.title}</Text>
-                </CardItem>
-            </Card>
+        <TouchableOpacity onPress={() => Linking.openURL(item.URL)}>
+            <Image source={item.image} style={{height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,
+                                               width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,
+                                               top:0,
+                                               position:"absolute"}}/>
         </TouchableOpacity>
         
     )

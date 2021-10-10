@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Button, Image, } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import * as Linking from "expo-linking";
 
 export function Page404({navigation}){
     return(
@@ -17,7 +18,7 @@ export function Page404({navigation}){
                 <View style={{flex:1}}/>
             </View>
             <View style={{flex:1}}/>
-            <Button style={{flex:1}} onPress={() => navigation.navigate("トップページ")} title="トップに戻る"/>
+            <Button style={{flex:1}} onPress={() => Linking.openURL(".")} title="トップに戻る"/>
         </View>
     )
 }

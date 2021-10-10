@@ -9,10 +9,33 @@ import * as RootNavigation from '../RootNavigation.js';
 const CardsMain = [];
 const CardsSub = [];
 var carouselItems=[
-    {title:"JR四国アプリが更にパワーアップ！",text: "予讃線内経由表示が可能となりました！！詳細はこちらから！",image:require("../assets/news/JRShikoku.png"),URL:"JRShikoku"},
+    {title:"JR四国アプリが更にパワーアップ！",text: "予讃線内経由表示が可能となりました！！詳細はこちらから！",image:require("../assets/news/JRShikoku.png"),URL:"?page=Apps&app_id=JRShikoku"},
     ];
 
-export default function Apps({navigation}) {
+function  Environment(){
+    if(window.navigator.userAgent.indexOf('iPhone') != -1)return true
+    
+    else if(window.navigator.userAgent.indexOf('iPad')!= -1)return true
+    
+    else return false
+    
+}
+var CreateCardData=[
+    {url: () => Linking.openURL("?page=Apps&app_id=JRShikoku"),image:require("../assets/Apps/JRS.png"),title:"JR四国列車運行情報表示アプリ",description:"JR四国の列車運行状況ビューワーです。JR四国公式サイトで公開されているページを表示するだけのアプリになっております。",A:1,i:2},
+    {url: () => Environment() ? Linking.openURL("https://apps.apple.com/us/app/ファミマ店員用揚げ物製作支援アプリ/id1488118221"):Linking.openURL("https://play.google.com/store/apps/details?id=familymart_toolkit.xprocess.hrkn"),image:require("../assets/Apps/fm.png"),title:"ファミマ揚げ物支援アプリ",description:"ファミマでバイトしている人のためのホットスナック製作支援ツールです。ホットスナックを作るタスク管理、時間を簡単に扱うことができます。",A:1,i:1},
+    {url: () => Environment() ? RootNavigation.navigate("404"): Linking.openURL("https://play.google.com/store/apps/details?id=plusclient.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Harukin+クライアント",description:"",A:2,i:0},
+]
+var CreateCardData2=[
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=qsqt.xproject.hrkn"),image:require("../assets/Apps/qsqt.png"),title:"QSQT",description:"",A:1,i:0},
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=atumori.xprocess.hrkn"),image:require("../assets/Apps/atsumori.png"),title:"熱盛",description:"",A:1,i:0},
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=toeicandaken.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ABCDメモ帳",description:"",A:1,i:0},
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=sqm.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"コピってなんでもQあ〜る",description:"",A:1,i:0},
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=mstdn.yzu.org.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Yづクライアント",description:"",A:1,i:0},
+    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=tanddpay.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ファミマ特攻T&D",description:"",A:1,i:0},
+]
+    
+
+export default function Apps() {
     CardsMain.length ? null :ContentsCardBase();
     return (
         <View style={styles.container}>
@@ -21,10 +44,10 @@ export default function Apps({navigation}) {
                     <View style={{flexDirection:"column",flex:1,height:"100%"}}>
                         <View style={{flex:1,}}/>
                         <View>
-                            <TouchableOpacity onPress={() => navigation.navigate('トップページ')} style={{flexDirection:"row",alignItems:"center"}}>
+                            <div onClick={() => Linking.openURL(".")} style={{flexDirection:"row",alignItems:"center"}}>
                                 <Entypo name="chevron-thin-left" color={"white"} size={25}/>
                                 {wp("100%")< 580 ? <Entypo name="home" color={"white"} size={25}/> : <Text style={{fontSize:20,color:"white"}}>ホームに戻る</Text>}
-                            </TouchableOpacity>  
+                            </div>  
                             <View style={{flex:1}}></View>  
                         </View>
                         <View style={{flex:1,}}/>
@@ -62,42 +85,28 @@ export default function Apps({navigation}) {
     );
 }
 
-var CreateCardData=[
-    {url: () => RootNavigation.navigate("JRShikoku"),image:require("../assets/Apps/JRS.png"),title:"JR四国列車運行情報表示アプリ",description:"JR四国の列車運行状況ビューワーです。JR四国公式サイトで公開されているページを表示するだけのアプリになっております。",A:1,i:2},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? Linking.openURL("https://apps.apple.com/us/app/ファミマ店員用揚げ物製作支援アプリ/id1488118221"):Linking.openURL("https://play.google.com/store/apps/details?id=familymart_toolkit.xprocess.hrkn"),image:require("../assets/Apps/fm.png"),title:"ファミマ揚げ物支援アプリ",description:"ファミマでバイトしている人のためのホットスナック製作支援ツールです。ホットスナックを作るタスク管理、時間を簡単に扱うことができます。",A:1,i:1},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404"): Linking.openURL("https://play.google.com/store/apps/details?id=plusclient.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Harukin+クライアント",description:"",A:2,i:0},
-]
-var CreateCardData2=[
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=qsqt.xproject.hrkn"),image:require("../assets/Apps/qsqt.png"),title:"QSQT",description:"",A:1,i:0},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=atumori.xprocess.hrkn"),image:require("../assets/Apps/atsumori.png"),title:"熱盛",description:"",A:1,i:0},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=toeicandaken.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ABCDメモ帳",description:"",A:1,i:0},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=sqm.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"コピってなんでもQあ〜る",description:"",A:1,i:0},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=mstdn.yzu.org.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Yづクライアント",description:"",A:1,i:0},
-    {url: () => window.navigator.userAgent.indexOf('iPhone')!=-1 ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=tanddpay.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ファミマ特攻T&D",description:"",A:1,i:0},
-]
-
 function ContentsCardBase(){
     CreateCardData.forEach(function(D){
         CardsMain.push(
-            <TouchableOpacity style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onPress={D.url}>
+            <div style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
                 {wp("100%")>800?
                 <Card>
-                    <CardItem cardBody>
+                    <CardItem cardBody button >
                         <Image source={D.image} style={{height: 200, width: null, flex: 1}}/>
                     </CardItem>
-                    <CardItem footer>
+                    <CardItem button  footer>
                         <Text>{D.title}</Text>
                     </CardItem>
-                    <CardItem footer>
+                    <CardItem button  footer>
                         <Text>{D.description}</Text>
                     </CardItem>
-                    <CardItem footer bordered>
+                    <CardItem button  footer bordered>
                         {DetectOSStatus(D.A,D.i)}
                     </CardItem>
                 </Card>
                 :
                 <Card>
-                    <CardItem>
+                    <CardItem button >
                         <Left>
                             <Thumbnail source={D.image} />
                             <Body>
@@ -109,30 +118,30 @@ function ContentsCardBase(){
                     </CardItem>   
                 </Card>
                 }
-            </TouchableOpacity>
+            </div>
         )
     })
     CreateCardData2.forEach(function(D){
         CardsSub.push(
-            <TouchableOpacity style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onPress={D.url}>
+            <div style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
                 {wp("100%")>800?
                 <Card>
-                    <CardItem cardBody>
+                    <CardItem button cardBody>
                         <Image source={D.image} style={{height: 200, width: null, flex: 1}}/>
                     </CardItem>
-                    <CardItem footer>
+                    <CardItem  button footer>
                         <Text>{D.title}</Text>
                     </CardItem>
-                    <CardItem footer>
+                    <CardItem  button footer>
                         <Text>{D.description}</Text>
                     </CardItem>
-                    <CardItem footer bordered>
+                    <CardItem  button footer bordered>
                         {DetectOSStatus(D.A,D.i)}
                     </CardItem>
                 </Card>
                 :
                 <Card>
-                    <CardItem>
+                    <CardItem button>
                         <Left>
                             <Thumbnail source={D.image} />
                             <Body>
@@ -144,7 +153,7 @@ function ContentsCardBase(){
                     </CardItem>   
                 </Card>
                 }
-            </TouchableOpacity>
+            </div>
         )
     })
 }
@@ -176,20 +185,17 @@ function DetectOSStatus(AS,iS){
 
 function renderItem({item}){
     return (
-        <TouchableOpacity onPress={() => RootNavigation.navigate(item.URL)}>
-            <Card style={{backgroundColor:'floralwhite',borderRadius: 5, Height:hp("30%"),justifyContent: "flex-start",flexDirection:"column-reverse"}}>
-                <CardItem cardBody style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}>
-                    <Image source={item.image} style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}/>
-                </CardItem>
-                <CardItem footer bordered style={{marginTop:"auto"}}>
-                    <Text>{item.text}</Text>
-                </CardItem>
-                <CardItem cardBody style={{marginTop:"auto"}}>
-                    <Text style={{fontSize: 20,margin:8}}>{item.title}</Text>
-                </CardItem>
-            </Card>
-        </TouchableOpacity>
-        
+        <Card style={{backgroundColor:'floralwhite',borderRadius: 5, Height:hp("30%"),justifyContent: "flex-start",flexDirection:"column-reverse"}} onClick={() => Linking.openURL(item.URL)}>
+            <CardItem button cardBody style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}>
+                <Image source={item.image} style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}/>
+            </CardItem>
+            <CardItem button footer bordered style={{marginTop:"auto"}}>
+                <Text>{item.text}</Text>
+            </CardItem>
+            <CardItem button cardBody style={{marginTop:"auto"}}>
+                <Text style={{fontSize: 20,margin:8}}>{item.title}</Text>
+            </CardItem>
+        </Card>
     )
 }
 

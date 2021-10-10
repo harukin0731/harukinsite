@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 88.81 73.85"
+   version="1.1"
+   id="svg881"
+   sodipodi:docname="HarukinCloud.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07, custom)"
+   inkscape:export-filename="/home/haruk/Documents/reactnative/harukinsite/assets/HarukinLogo/HarukinCloud.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <metadata
+     id="metadata885">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1896"
+     inkscape:window-height="995"
+     id="namedview883"
+     showgrid="false"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="-2.0477195"
+     inkscape:cy="23.394436"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs847">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3087">
+      <stop
+         style="stop-color:#1abedb;stop-opacity:0.38431373"
+         offset="0"
+         id="stop3083" />
+      <stop
+         style="stop-color:#ffc346;stop-opacity:1"
+         offset="1"
+         id="stop3085" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3075">
+      <stop
+         style="stop-color:#477cdb;stop-opacity:1"
+         offset="0"
+         id="stop3071" />
+      <stop
+         style="stop-color:#00c3db;stop-opacity:0;"
+         offset="1"
+         id="stop3073" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3067">
+      <stop
+         style="stop-color:#47b7db;stop-opacity:1"
+         offset="0"
+         id="stop3063" />
+      <stop
+         style="stop-color:#ffc346;stop-opacity:1"
+         offset="1"
+         id="stop3065" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3021-7-5">
+      <stop
+         style="stop-color:#23a0dc;stop-opacity:0.48627451"
+         offset="0"
+         id="stop3017" />
+      <stop
+         style="stop-color:#1cbdd9;stop-opacity:0.39215687"
+         offset="1"
+         id="stop3019" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1084"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1082" />
+    </linearGradient>
+    <style
+       id="style833">.cls-1{fill:none;}.cls-2{fill:#231815;}.cls-3{clip-path:url(#clip-path);}.cls-4{clip-path:url(#clip-path-2);}.cls-5{fill:#af0082;}.cls-6{fill:#00afec;}.cls-7{clip-path:url(#clip-path-3);}.cls-8{clip-path:url(#clip-path-4);}</style>
+    <clipPath
+       id="clip-path">
+      <path
+         class="cls-1"
+         d="M28.22,64.67a2.84,2.84,0,0,0,5.67,0v-4.3h1.23v4.3a4.07,4.07,0,0,1-8.13,0v-4.3h1.23Z"
+         id="path835" />
+    </clipPath>
+    <clipPath
+       id="clip-path-2">
+      <rect
+         class="cls-1"
+         x="21.99"
+         y="55.37"
+         width="18.12"
+         height="18.36"
+         id="rect838" />
+    </clipPath>
+    <clipPath
+       id="clip-path-3">
+      <polyline
+         class="cls-1"
+         points="31.63 47.04 31.63 11.85 27 11.85 27 60.37 31.52 54.68"
+         id="polyline841" />
+    </clipPath>
+    <clipPath
+       id="clip-path-4">
+      <rect
+         class="cls-1"
+         x="22"
+         y="6.85"
+         width="14.63"
+         height="58.52"
+         id="rect844" />
+    </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3067"
+       id="linearGradient979"
+       x1="28.531443"
+       y1="5.3179731"
+       x2="94.072563"
+       y2="51.800415"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.59868576,0,0,0.58540084,26.757366,6.3712942)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3021-7-5"
+       id="linearGradient3015"
+       x1="28.630434"
+       y1="20.486881"
+       x2="35.822868"
+       y2="48.610863"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3075"
+       id="linearGradient3029"
+       x1="-2.2763708"
+       y1="7.2099991"
+       x2="30.717331"
+       y2="58.246712"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3087"
+       id="linearGradient3045"
+       x1="32.216583"
+       y1="50.526688"
+       x2="54.947361"
+       y2="38.94521"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1">
+    <path
+       id="path888"
+       style="fill:url(#linearGradient979);fill-opacity:1;stroke-width:2.36803;stroke-opacity:0.741176"
+       d="m 62.870158,13.875115 c -5.03261,9.5e-5 -9.112322,3.989277 -9.112418,8.910213 -1.3e-5,0.42621 0.03125,0.851869 0.09354,1.273704 -3.559957,1.301984 -6.072614,3.168759 -5.976458,6.552669 0.130628,4.597026 4.853716,5.719605 7.451773,5.719605 l 16.471526,-0.148905 c 2.913189,-0.02634 5.743058,-2.865999 5.865996,-5.515818 0.133443,-2.876293 -2.266397,-5.203199 -5.786783,-6.526372 0.0703,-0.448351 0.105477,-0.901294 0.105238,-1.354883 -9.6e-5,-4.920936 -4.079808,-8.910118 -9.112418,-8.910213 z"
+       inkscape:label="path888"
+       sodipodi:nodetypes="cscscsaccc" />
+  </g>
+  <g
+     id="レイヤー_2"
+     data-name="レイヤー 2">
+    <g
+       id="レイヤー_1-2"
+       data-name="レイヤー 1"
+       transform="translate(13.394447,6.345836)">
+      <polygon
+         class="cls-5"
+         points="8.73,0 4.1,0 4.1,44.17 8.73,44.17 8.73,27.88 27.36,27.88 27.36,23.25 8.73,23.25 "
+         id="polygon867"
+         style="fill:url(#linearGradient3029);fill-opacity:1"
+         transform="matrix(0.99978504,0,0,1,0.00276977,0)" />
+      <polyline
+         class="cls-6"
+         points="31.52 54.68 42.17 41.3 53.93 56.02 57.67 53.23 45.12 37.56 54.44 25.79 50.7 23 31.63 47.04"
+         id="polyline869"
+         style="fill:url(#linearGradient3045);fill-opacity:1"
+         transform="matrix(0.99551865,0,0,1,0.25280515,0)" />
+      <g
+         class="cls-7"
+         clip-path="url(#clip-path-3)"
+         id="g875"
+         style="fill:none;fill-opacity:0"
+         transform="matrix(0.94637126,0,0,1,1.8042461,0)">
+        <rect
+           style="fill:url(#linearGradient3015);fill-opacity:1;stroke-width:4;stroke-opacity:0.741176"
+           id="rect3007"
+           width="7.9724946"
+           height="52.352722"
+           x="26.468023"
+           y="11.193651" />
+      </g>
+    </g>
+  </g>
+</svg>
