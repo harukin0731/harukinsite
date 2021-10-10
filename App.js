@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator,TransitionPresets } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { TopPage,  TopPageAbout } from './TopPage';
+import { TopPage,  TopPageAbout, TopPageStatus } from './TopPage';
 import { AboutMe } from './Page/Aboutme';
 import { Page404 } from './404';
 import { navigationRef } from './RootNavigation.js';
@@ -29,7 +29,8 @@ export default function App() {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator headerMode="screen">
         <Stack.Screen name='トップページ' component={TopPage}       options={{headerShown: false}} path="Top"/>
-        <Stack.Screen name='あばうと'     component={TopPageAbout}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>
+        <Stack.Screen name='About'     component={TopPageAbout}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>
+        <Stack.Screen name='Status'     component={TopPageStatus}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>
         <Stack.Screen name='自分'         component={AboutMe}       options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>
         <Stack.Screen name='404'          component={Page404}       options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>
         <Stack.Screen name='Web'          component={Web}           options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: false }}/>

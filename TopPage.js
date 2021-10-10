@@ -141,7 +141,15 @@ export function TopPage({navigation}) {
             backgroundColor:"#46385b"}}>
                 <View style={{height:70,width:wp("100%")-20}}>
                     <View style={{flexDirection:'row',height:60,width:"100%"}}>
-                        <View style={{flex:1}}/>
+                        <View style={{flex:1, flexDirection:"row"}}>
+                            <View style={{flexDirection:"column"}}>
+                                <View style={{flex:1}}/>
+                                <TouchableOpacity onPress={() => navigation.navigate('Status')}>
+                                    <Entypo name="bar-graph" color={"white"} size={25} style={{margin:10}}/>
+                                </TouchableOpacity>
+                                <View style={{flex:1}}/>
+                            </View>
+                        </View>
                         <View>
                             <View style={{flex:1}}/>
                             <Image source={require("./assets/HarukinLogo/Harukin_w.svg")} style={{height: 50,width: 200}}/>
@@ -150,7 +158,7 @@ export function TopPage({navigation}) {
                         <View style={{flex:1, flexDirection:"row-reverse"}}>
                             <View style={{flexDirection:"column"}}>
                                 <View style={{flex:1}}/>
-                                <TouchableOpacity onPress={() => navigation.navigate('あばうと')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('About')}>
                                     <Entypo name="info-with-circle" color={"white"} size={25} style={{margin:10}}/>
                                 </TouchableOpacity>
                                 <View style={{flex:1}}/>
@@ -252,22 +260,15 @@ export function TopPage({navigation}) {
                                 </CardItem>   
                                 }
                             </Card>    
-                            <Card style={{width:"100%"}}>
-                                <CardItem header bordered>
-                                    <Text style={{fontWeight: "bold"}}>製作物進捗状況</Text>
-                                </CardItem>
-                                {進捗data}
-                            </Card>
+                            
                         </View>
                     </View>
                     <View style={{alignItems:"center",flex:wp("100%") > 800 ? 1 : null,width:"100%",padding:wp("100%") > 800 ? 20:5,paddingLeft:wp("100%") > 800 ? 10:null }}>
                         <Card style={{width:"100%"}}>
-                            <CardItem header>
-                                <Text style={{fontWeight: "bold"}}>サーバー稼働状況</Text>
+                            <CardItem header bordered>
+                                <Text style={{fontWeight: "bold"}}>製作物進捗状況</Text>
                             </CardItem>
-                            <CardItem cardBody>
-                                <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="1000"></iframe>
-                            </CardItem>
+                            {進捗data}
                         </Card>
                     </View>
                 </View>
@@ -463,6 +464,13 @@ export function TopPageAbout({navigation}){
     )
 }
 
+export function TopPageStatus({navigation}){
+    return(
+        <View style={{alignItems:"center",position:"relative",height:"100%"}}>
+            <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%"></iframe>
+        </View>
+    )
+}
 
 
 
