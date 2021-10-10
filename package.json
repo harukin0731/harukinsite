@@ -17,6 +17,7 @@
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@use-expo/font": "^2.0.0",
     "expo": "~37.0.3",
+    "expo-cli": "^4.12.1",
     "expo-font": "~8.1.0",
     "expo-linking": "^1.0.4",
     "lottie-react-native": "~2.6.1",
