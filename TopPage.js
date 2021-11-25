@@ -281,7 +281,7 @@ export function TopPage({navigation}) {
                                     
                                     <View style={{flex:1}} />
                                     <Text style={{fontWeight: "bold",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "harukin" ? 3:0}} onClick={() => setBlogTab("harukin")}>はるきんぶろぐ</Text>
-                                    <Text style={{fontWeight: "bold",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0}} onClick={() => setBlogTab("PCGF")}>PCGFダイアリー</Text>
+                                    <Text style={{fontWeight: "bold",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0, color:NotiCard2 || "gray"}} onClick={() => NotiCard2 && setBlogTab("PCGF")}>PCGFダイアリー</Text>
                                 </View>
                                 {blogTab == "harukin" ? 
                                 NotiCard ? NotiCard : 
@@ -436,12 +436,20 @@ export function TopPageAbout({navigation}){
                         <Body style={{flexDirection:"column"}}>
                             <View style={{flexDirection:"row",}} >
                                 <Entypo name="twitter" color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Twitter</Text>  
+                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Normal Network</Text>  
                             </View>
-                            <Text style={{fontStyle:"italic",fontSize:20}}>Twitterの関連アカウント一覧</Text>
+                            <Text style={{fontStyle:"italic",fontSize:20}}>一般サービスアカウント</Text>
                         </Body>
                     </CardItem>  
-                    {twitterData ? twitterData.map(d=>
+                    
+                    {twitterData ? 
+                    [<CardItem bordered>
+                        <View style={{flexDirection:"row",}} >
+                            <Entypo name="twitter" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Twitter</Text>  
+                        </View>
+                    </CardItem>,
+                    twitterData.filter(d=>d.type=="Twitter").map(d=>
                         <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
                             <Left>
                                 <Thumbnail source={d.image} />
@@ -454,15 +462,53 @@ export function TopPageAbout({navigation}){
                                 </Body>
                             </Left>
                         </CardItem>
-                    )
-                    : 
+                    ),
                     <CardItem bordered>
+                        <View style={{flexDirection:"row",}} >
+                            <Entypo name="github" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>GitHub / GitLab</Text>  
+                        </View>
+                    </CardItem>,
+                    twitterData.filter(d=>d.type=="Git").map(d=>
+                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
+                            <Left>
+                                <Thumbnail source={d.image} />
+                                <Body style={{flexDirection:"column"}}>
+                                    <View style={{flexDirection:"row"}}>
+                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                        <View style={{flex:1}} />
+                                    </View>
+                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                    ),
+                    <CardItem bordered>
+                        <View style={{flexDirection:"row",}} >
+                            <Entypo name="instagram" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Instagram</Text>  
+                        </View>
+                    </CardItem>,
+                    twitterData.filter(d=>d.type=="Instagram").map(d=>
+                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
+                            <Left>
+                                <Thumbnail source={d.image} />
+                                <Body style={{flexDirection:"column"}}>
+                                    <View style={{flexDirection:"row"}}>
+                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                        <View style={{flex:1}} />
+                                    </View>
+                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                    )]
+                    : 
+                    <CardItem>
                         <Body style={{flexDirection:"column",alignItems:"center"}}>
                         <LottieView ref={LottieRef} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
                         </Body>
                     </CardItem>
-                        
-                    
                     }
                 </Card>
                 <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600}}> 
@@ -470,25 +516,54 @@ export function TopPageAbout({navigation}){
                         <Body style={{flexDirection:"column"}}>
                             <View style={{flexDirection:"row",}} >
                                 <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Fediverse</Text>  
+                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Fediverse Network</Text>  
                             </View>
-                            <Text style={{fontStyle:"italic",fontSize:20}}>Fediverseに属するアカウント一覧</Text>
+                            <Text style={{fontStyle:"italic",fontSize:20}}>分散型ネットワークアカウント</Text>
                         </Body>
                     </CardItem>  
-                    {fediverseData ? fediverseData.map(d=>
-                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                            <Left>
-                                <Thumbnail source={d.image} />
-                                <Body style={{flexDirection:"column"}}>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                        <View style={{flex:1}} />
-                                    </View>
-                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                    )
+                      
+                    {fediverseData ? [
+                        <CardItem bordered>
+                            <View style={{flexDirection:"row",}} >
+                                <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Mastodon</Text>  
+                            </View>
+                        </CardItem>,
+                        fediverseData.filter(d=>d.type=="Mastodon").map(d=>
+                            <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
+                                <Left>
+                                    <Thumbnail source={d.image} />
+                                    <Body style={{flexDirection:"column"}}>
+                                        <View style={{flexDirection:"row"}}>
+                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                            <View style={{flex:1}} />
+                                        </View>
+                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                    </Body>
+                                </Left>
+                            </CardItem>
+                        ),
+                        <CardItem bordered>
+                            <View style={{flexDirection:"row",}} >
+                                <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Pixelfed</Text>  
+                            </View>
+                        </CardItem>,
+                        fediverseData.filter(d=>d.type=="Pixelfed").map(d=>
+                            <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
+                                <Left>
+                                    <Thumbnail source={d.image} />
+                                    <Body style={{flexDirection:"column"}}>
+                                        <View style={{flexDirection:"row"}}>
+                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                            <View style={{flex:1}} />
+                                        </View>
+                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                    </Body>
+                                </Left>
+                            </CardItem>
+                        ),
+                    ]
                     : 
                     <CardItem bordered>
                         <Body style={{flexDirection:"column",alignItems:"center"}}>
