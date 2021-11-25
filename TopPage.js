@@ -65,7 +65,9 @@ const HarukinSiteData = [
     //****************** */
 export function TopPage({navigation}) {
     const [NotiCard,setNotiCard] = useState(null);
+    const [NotiCard2,setNotiCard2] = useState(null);
     const [topCarousel,setCarousel] = useState(null);
+    const [blogTab,setBlogTab] = useState("harukin");
     const LottieRef = useRef(null);
     const LottieRef2 = useRef(null);
     /* Cards.length ? null : 
@@ -118,7 +120,28 @@ export function TopPage({navigation}) {
                 </CardItem>   
             ));
         });
-
+        fetch("https://diary.pcgf.io/rss/",{mode: "cors"})
+        .then(response=>response.text())
+        .then(text=>xmlToJSON.parseString(text))
+        .then(results=>{
+            console.log("取得完了");
+            console.log(results)
+            const NotiDataItems = results.rss[0].channel[0].item.map(D=>({title:D.title[0]._text,  text: D.description[0]._text,   image:"https://pcgf.io/wp-content/uploads/2020/12/PCGFロゴ.png",   URL:D.link[0]._text, time:D.pubDate[0]._text}));
+            setNotiCard2(NotiDataItems.map(Noti=>
+                <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
+                    <Left>
+                        <Thumbnail source={Noti.image} />
+                        <Body style={{flexDirection:"column"}}>
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={{fontWeight:"bold"}}>{Noti.title}</Text>  
+                                <View style={{flex:1}} />
+                            </View>
+                            <Text style={{fontStyle:"italic"}}>{Noti.text.slice(0,40)}...</Text>
+                        </Body>
+                    </Left>
+                </CardItem>   
+            ));
+        });
         fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
         .then(response=>response.text())
         .then(text=>csvText_to_json(text))
@@ -249,10 +272,26 @@ export function TopPage({navigation}) {
                         </Card>  
                         <View style={{alignItems:"center",flex:wp("100%") > 800 ? 1 : null,width:"100%"}}>
                             <Card style={{width:"100%"}}>
-                                <CardItem header bordered>
-                                    <Text style={{fontWeight: "bold"}}>ブログ更新....</Text>
-                                </CardItem>
-                                {NotiCard ? NotiCard : 
+                                {/* <CardItem header bordered> 
+                                    <Text style={{fontWeight: "bold",padding:10,backgroundColor:"blue"}}>はるきんぶろぐ</Text>
+                                    <Text style={{fontWeight: "bold",padding:10}}>PCGFダイアリー</Text>
+                                </CardItem> */}
+                                <View style={{flexDirection:"row",padding:5,paddingBottom:0,borderBottomColor:"dark",borderBottomWidth:1}}>
+                                    {wp("100%") > 400 ? <Text style={{fontWeight: "bold",padding:10}}>ブログの更新...</Text> : <Entypo name="feather"  size={20} style={{margin:10}}/>}
+                                    
+                                    <View style={{flex:1}} />
+                                    <Text style={{fontWeight: "bold",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "harukin" ? 3:0}} onClick={() => setBlogTab("harukin")}>はるきんぶろぐ</Text>
+                                    <Text style={{fontWeight: "bold",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0}} onClick={() => setBlogTab("PCGF")}>PCGFダイアリー</Text>
+                                </View>
+                                {blogTab == "harukin" ? 
+                                NotiCard ? NotiCard : 
+                                <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
+                                    <Body style={{alignItems:"center"}}>
+                                        <LottieView ref={LottieRef} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
+                                    </Body>
+                                </CardItem>   
+                                :
+                                NotiCard2 ? NotiCard2 : 
                                 <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
                                     <Body style={{alignItems:"center"}}>
                                         <LottieView ref={LottieRef} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
