@@ -589,17 +589,10 @@ export function TopPageStatus({navigation}){
                 <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0}} onClick={() => setBlogTab("PCGF")}>PCGF.io</Text>
                 <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "rintan" ? 3:0}} onClick={() => setBlogTab("rintan")}>rintan.net</Text>
             </View>
+            <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "harukin" && "none"}}></iframe>
+            <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "PCGF" && "none"}}></iframe>
+            <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "rintan" && "none"}}></iframe>
             
-            {(d =>{
-                switch(d){
-                    case "harukin":
-                        return <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%"></iframe>
-                    case "PCGF":
-                        return <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%"></iframe>
-                    case "rintan":
-                        return <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%"></iframe>
-                }
-            })(blogTab)}
             
         </View>
     )
