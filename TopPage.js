@@ -579,9 +579,28 @@ export function TopPageAbout({navigation}){
 }
 
 export function TopPageStatus({navigation}){
+    const [NotiCard2,setNotiCard2] = useState(null);
+    const [blogTab,setBlogTab] = useState("harukin");
     return(
         <View style={{alignItems:"center",position:"relative",height:"100%"}}>
-            <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%"></iframe>
+            <View style={{flexDirection:"row",padding:5,paddingBottom:0,borderBottomColor:"dark",borderBottomWidth:1,width:"100%"}}>
+                
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "harukin" ? 3:0}} onClick={() => setBlogTab("harukin")}>haruk.in</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0}} onClick={() => setBlogTab("PCGF")}>PCGF.io</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "rintan" ? 3:0}} onClick={() => setBlogTab("rintan")}>rintan.net</Text>
+            </View>
+            
+            {(d =>{
+                switch(d){
+                    case "harukin":
+                        return <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%"></iframe>
+                    case "PCGF":
+                        return <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%"></iframe>
+                    case "rintan":
+                        return <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%"></iframe>
+                }
+            })(blogTab)}
+            
         </View>
     )
 }
