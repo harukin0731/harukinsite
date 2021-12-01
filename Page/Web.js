@@ -10,9 +10,6 @@ import { RenderItem } from '../util/carouselTools';
 
 const CardsMain = [];
 const CardsSub = [];
-var carouselItems=[
-    {image:require("../assets/CardView/jrshikokuDelayEX.png"),  URL:"https://twitter.com/JRSTraInfoEX"},
-]
 export default function Web({navigation}) {
     const [topCarousel,setCarousel] = useState(null);
     const LottieRef = useRef(null);

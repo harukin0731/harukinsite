@@ -16,12 +16,6 @@ let date = Linking.makeUrl("",{page:"TopPage"});
 import xmlToJSON from 'xmltojson';
 import { csvText_to_json } from './util/csvText_to_json';
 import { RenderItem } from './util/carouselTools';
-//上部配置
-var TopItems=[
-    {image:require("./assets/CardView/jrshikoku.png"),  URL:"?page=Apps&?app_id=JRShikoku"},
-    {image:require("./assets/CardView/fm.png"),         URL:"?page=Apps&?app_id=fm"},
-    {image:require("./assets/CardView/jrshikokuDelayEX.png"),  URL:"https://twitter.com/JRSTraInfoEX"},
-]
 
 
 //進捗情報ベース
@@ -512,21 +506,17 @@ export function TopPageAbout({navigation}){
 }
 
 export function TopPageStatus({navigation}){
-    const [NotiCard2,setNotiCard2] = useState(null);
-    const [blogTab,setBlogTab] = useState("harukin");
+    const [tab,setTab] = useState("harukin");
     return(
         <View style={{alignItems:"center",position:"relative",height:"100%"}}>
             <View style={{flexDirection:"row",padding:5,paddingBottom:0,borderBottomColor:"dark",borderBottomWidth:1,width:"100%"}}>
-                
-                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "harukin" ? 3:0}} onClick={() => setBlogTab("harukin")}>haruk.in</Text>
-                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "PCGF" ? 3:0}} onClick={() => setBlogTab("PCGF")}>PCGF.io</Text>
-                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:blogTab == "rintan" ? 3:0}} onClick={() => setBlogTab("rintan")}>rintan.net</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "harukin" ? 3:0}} onClick={() => setTab("harukin")}>haruk.in</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "PCGF" ? 3:0}} onClick={() => setTab("PCGF")}>PCGF.io</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "rintan" ? 3:0}} onClick={() => setTab("rintan")}>rintan.net</Text>
             </View>
-            <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "harukin" && "none"}}></iframe>
-            <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "PCGF" && "none"}}></iframe>
-            <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%" style={{display:blogTab != "rintan" && "none"}}></iframe>
-            
-            
+            <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "harukin" && "none"}}></iframe>
+            <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "PCGF" && "none"}}></iframe>
+            <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "rintan" && "none"}}></iframe>
         </View>
     )
 }
