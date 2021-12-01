@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { AppLoading} from 'expo';
 import { useFonts } from '@use-expo/font';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator,TransitionPresets } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { TopPage } from './TopPage';
 import { Page404 } from './404';
 import { navigationRef } from './RootNavigation.js';
-import { data as page2020102101 } from './Page/Info/2020_10_21_01';
 import * as Linking from "expo-linking";
 import * as RootNavigation from './RootNavigation.js';
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
     'Inter-Black': require('./assets/font_1_ant-maru.ttf'),

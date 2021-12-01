@@ -25,6 +25,12 @@ export default function Web({navigation}) {
         .then(json=>json.filter(d=>d.type == 'web'))
         .then(data=>setCarousel(data));
     },[])
+    useEffect(()=>{
+        try{
+          LottieRef?.current.play();
+          LottieRef2?.current.play();
+        }catch(e){}
+    })
     return (
         <View style={styles.container}>
             <View style={{height:wp("100%") > 800 ? hp("30%")+100 : ((wp("80%")/16) * 9)+100, minHeight:250 ,justifyContent: 'center',alignItems: 'center',backgroundColor:"#C17D11"}}>
