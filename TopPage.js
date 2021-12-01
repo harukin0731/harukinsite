@@ -15,23 +15,13 @@ const 進捗data=[];
 let date = Linking.makeUrl("",{page:"TopPage"});
 import xmlToJSON from 'xmltojson';
 import { csvText_to_json } from './util/csvText_to_json';
+import { RenderItem } from './util/carouselTools';
 //上部配置
 var TopItems=[
     {image:require("./assets/CardView/jrshikoku.png"),  URL:"?page=Apps&?app_id=JRShikoku"},
     {image:require("./assets/CardView/fm.png"),         URL:"?page=Apps&?app_id=fm"},
     {image:require("./assets/CardView/jrshikokuDelayEX.png"),  URL:"https://twitter.com/JRSTraInfoEX"},
 ]
-//更新情報
-async function readRSS(){
-    const response = await fetch("https://blog.haruk.in/index.rdf",{mode: "cors"});
-    const text = await response.text();
-    if(response.status !== 200){
-        console.log("にゃーん");
-        console.log(response.status);
-    }else{
-        return(xmlToJSON.parseString(text));
-    }
-}
 
 
 //進捗情報ベース
@@ -70,32 +60,7 @@ export function TopPage({navigation}) {
     const [blogTab,setBlogTab] = useState("harukin");
     const LottieRef = useRef(null);
     const LottieRef2 = useRef(null);
-    /* Cards.length ? null : 
-    readRSS().then(results=>{
-        let NotiDataItems=[];
-        console.log("取得完了");
-        results.RDF[0].item.forEach((D)=>{
-            console.log(D);
-            NotiDataItems.push({title:D.title[0]._text,  text: D.description[0]._text,   image:require("./assets/HarukinLogo/HarukinPlus_s.png"),   URL:D.link[0]._text, time:D.date[0]._text});
-        }),
-        NotiDataItems.forEach(function (Noti){
-            NotiData.push(
-                <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
-                    <Left>
-                        <Thumbnail source={Noti.image} />
-                        <Body style={{flexDirection:"column"}}>
-                            <View style={{flexDirection:"row"}}>
-                                <Text style={{fontWeight:"bold"}}>{Noti.title}</Text>  
-                                <View style={{flex:1}} />
-                            </View>
-                            <Text style={{fontStyle:"italic"}}>{Noti.text.slice(0,40)}...</Text>
-                        </Body>
-                    </Left>
-                </CardItem>   
-            )
-        })
-        setNotiCard(NotiData);
-    }); */
+    
     useEffect(()=>{
         ContentsCardBase();
         fetch("https://blog.haruk.in/index.rdf",{mode: "cors"})
@@ -156,37 +121,26 @@ export function TopPage({navigation}) {
     })
     return (
         <View style={styles.container}>
-            <View style={{
-            height:wp("100%") > 800 ? hp("30%")+100 : ((wp("80%")/16) * 9)+100, 
-            minHeight:250 ,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor:"#46385b"}}>
-                <View style={{height:70,width:wp("100%")-20}}>
-                    <View style={{flexDirection:'row',height:60,width:"100%"}}>
-                        <View style={{flex:1, flexDirection:"row"}}>
-                            <View style={{flexDirection:"column"}}>
-                                <View style={{flex:1}}/>
-                                <TouchableOpacity onPress={() => navigation.navigate('Status')}>
-                                    <Entypo name="bar-graph" color={"white"} size={25} style={{margin:10}}/>
-                                </TouchableOpacity>
-                                <View style={{flex:1}}/>
-                            </View>
-                        </View>
-                        <View>
-                            <View style={{flex:1}}/>
-                            <Image source={require("./assets/HarukinLogo/Harukin_w.svg")} style={{height: 50,width: 200}}/>
-                            <View style={{flex:1}}/>
-                        </View>
-                        <View style={{flex:1, flexDirection:"row-reverse"}}>
-                            <View style={{flexDirection:"column"}}>
-                                <View style={{flex:1}}/>
-                                <TouchableOpacity onPress={() => navigation.navigate('About')}>
-                                    <Entypo name="info-with-circle" color={"white"} size={25} style={{margin:10}}/>
-                                </TouchableOpacity>
-                                <View style={{flex:1}}/>
-                            </View>
-                        </View>
+            <View style={{height:wp("100%") > 800 ? hp("30%")+100 : ((wp("80%")/16) * 9)+100, minHeight:250 ,justifyContent: 'center',alignItems: 'center',backgroundColor:"#46385b"}}>
+                <View style={{flexDirection:'row',height:70,width:wp("100%")-20}}>
+                    <View style={{flexDirection:"column"}}>
+                        <View style={{flex:1}}/>
+                        <TouchableOpacity onPress={() => navigation.navigate('Status')}>
+                            <Entypo name="bar-graph" color={"white"} size={25} style={{margin:10}}/>
+                        </TouchableOpacity>
+                        <View style={{flex:1}}/>
+                    </View>
+                    <View style={{flex:1, flexDirection:"column",alignContent:"center",alignItems:"center"}}>
+                        <View style={{flex:1}}/>
+                        <Image source={require("./assets/HarukinLogo/Harukin_w.svg")} style={{height: 50,width: 200}}/>
+                        <View style={{flex:1}}/>
+                    </View>
+                    <View style={{flexDirection:"column"}}>
+                        <View style={{flex:1}}/>
+                        <TouchableOpacity onPress={() => navigation.navigate('About')}>
+                            <Entypo name="info-with-circle" color={"white"} size={25} style={{margin:10}}/>
+                        </TouchableOpacity>
+                        <View style={{flex:1}}/>
                     </View>
                 </View>
                 {topCarousel ? 
@@ -200,8 +154,7 @@ export function TopPage({navigation}) {
                     autoplay={'true'}
                     loop={true} />
                 :
-                <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,
-                width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
                     <View style={{flex:1}} />
                     <LottieView ref={LottieRef2} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
                     <View style={{flex:1}} />
@@ -272,10 +225,6 @@ export function TopPage({navigation}) {
                         </Card>  
                         <View style={{alignItems:"center",flex:wp("100%") > 800 ? 1 : null,width:"100%"}}>
                             <Card style={{width:"100%"}}>
-                                {/* <CardItem header bordered> 
-                                    <Text style={{fontWeight: "bold",padding:10,backgroundColor:"blue"}}>はるきんぶろぐ</Text>
-                                    <Text style={{fontWeight: "bold",padding:10}}>PCGFダイアリー</Text>
-                                </CardItem> */}
                                 <View style={{flexDirection:"row",padding:5,paddingBottom:0,borderBottomColor:"dark",borderBottomWidth:1}}>
                                     {wp("100%") > 400 ? <Text style={{fontWeight: "bold",padding:10}}>ブログの更新...</Text> : <Entypo name="feather"  size={20} style={{margin:10}}/>}
                                     
@@ -350,22 +299,6 @@ function ContentsCardBase(){
             </View>
         )
     })
-}
-//最新情報カードの清々
-function RenderItem({item}){
-    /* const [image,setImage] = useState(undefined);
-    useEffect(()=>{
-        import(item.image).then(d=>{
-        setImage(d);
-        })
-    },[]) */
-    return (
-        <TouchableOpacity onPress={() => Linking.openURL(item.url)} style={{height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,
-                                                                            width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,
-                                                                            backgroundColor:"white",alignSelf:"center",alignContent:"center",alignItems:"center"}}>
-            <Image source={item.image} style={{width:"100%",height:"100%",position:"absolute"}}/>
-        </TouchableOpacity>
-    )
 }
 
 //アコーディオンの中身を生成する

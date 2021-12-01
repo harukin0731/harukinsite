@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator,TransitionPresets } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { TopPage,  TopPageAbout, TopPageStatus } from './TopPage';
+import { TopPage } from './TopPage';
 import { Page404 } from './404';
 import { navigationRef } from './RootNavigation.js';
 import { data as page2020102101 } from './Page/Info/2020_10_21_01';
@@ -26,21 +26,27 @@ export default function App() {
   const [appsPage,setAppsPage] = useState();
   const [webPage,setWebPage] = useState();
   const [fmPage,setFmPage] = useState();
+  const [TopPageData,setTopPage] = useState();
   useEffect(()=>{
-    Promise.allSettled([import('./Page/Apps').then(d=>setAppsPage(d)),import('./Page/Web').then(d=>setWebPage(d)),import('./Page/Apps/fm').then(d=>setFmPage(d))]).then((value)=>{
+    Promise.allSettled([
+      import('./Page/Apps').then(d=>setAppsPage(d)),
+      import('./Page/Web').then(d=>setWebPage(d)),
+      import('./Page/Apps/fm').then(d=>setFmPage(d)),
+      import('./TopPage').then(d=>setTopPage(d))
+    ]).then((value)=>{
       console.log(value)
       
     })  
   },[])
   
-  appsPage && webPage && fmPage && test()
+  TopPageData && appsPage && webPage && fmPage && test()
 
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator headerMode="screen">
         <Stack.Screen name='トップページ' component={TopPage}       options={{headerShown: false}} path="Top"/>
-        <Stack.Screen name='About'     component={TopPageAbout}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>
-        <Stack.Screen name='Status'     component={TopPageStatus}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>
+        {TopPageData       && <Stack.Screen name='About'     component={TopPageData.TopPageAbout}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>}
+        {TopPageData       && <Stack.Screen name='Status'     component={TopPageData.TopPageStatus}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>}
         <Stack.Screen name='404'          component={Page404}       options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>
         {webPage        && <Stack.Screen name='Web'          component={webPage.default}           options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: false }}/>}
         {appsPage       && <Stack.Screen name='Apps'         component={appsPage.default}          options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: false }}/>}

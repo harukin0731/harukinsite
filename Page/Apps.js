@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Image, Linking, ScrollView, TouchableOpacity,} from 'react-native';
 import { Card, CardItem, Thumbnail, Icon, Left, Body } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Entypo } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
+import LottieView from 'react-native-web-lottie';
 import * as RootNavigation from '../RootNavigation.js';
+import { csvText_to_json } from '../util/csvText_to_json.js';
+import { RenderItem } from '../util/carouselTools.js';
 
 const CardsMain = [];
 const CardsSub = [];
@@ -36,41 +39,57 @@ var CreateCardData2=[
     
 
 export default function Apps() {
-    CardsMain.length ? null :ContentsCardBase();
+    const [topCarousel,setCarousel] = useState(null);
+    const LottieRef = useRef(null);
+    const LottieRef2 = useRef(null);
+    useEffect(()=>{
+        ContentsCardBase();
+        fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
+        .then(response=>response.text())
+        .then(text=>csvText_to_json(text))
+        .then(json=>json.filter(d=>d.type == 'apps'))
+        .then(data=>setCarousel(data));
+    },[])
     return (
         <View style={styles.container}>
-            <View style={{backgroundColor:"#89C4D8",height:hp("40%"),width:"100%",top:0}}>
-                <View style={{flexDirection:'row',position:"relative"}}>
-                    <View style={{flexDirection:"column",flex:1,height:"100%"}}>
-                        <View style={{flex:1,}}/>
-                        <View>
-                            <div onClick={() => Linking.openURL(".")} style={{flexDirection:"row",alignItems:"center"}}>
-                                <Entypo name="chevron-thin-left" color={"white"} size={25}/>
-                                {wp("100%")< 580 ? <Entypo name="home" color={"white"} size={25}/> : <Text style={{fontSize:20,color:"white"}}>ホームに戻る</Text>}
-                            </div>  
-                            <View style={{flex:1}}></View>  
-                        </View>
-                        <View style={{flex:1,}}/>
+            <View style={{height:wp("100%") > 800 ? hp("30%")+100 : ((wp("80%")/16) * 9)+100, minHeight:250 ,justifyContent: 'center',alignItems: 'center',backgroundColor:"#89C4D8"}}>
+                <View style={{flexDirection:'row',height:70,width:wp("100%")-20}}>
+                    <View style={{flex:1,flexDirection:"column"}}>
+                        <View style={{flex:1}}/>
+                        <TouchableOpacity onPress={() => Linking.openURL(".")} style={{flexDirection:"row",alignItems:"center"}}>
+                            <Entypo name="chevron-thin-left" color={"white"} size={20} style={{margin:10,marginRight:5}}/>
+                            {wp("100%")< 580 ? <Entypo name="home" color={"white"} size={20}/> : <Text style={{fontSize:20,color:"white"}}>ホームに戻る</Text>}
+                        </TouchableOpacity>
+                        <View style={{flex:1}}/>
                     </View>
-                    <View style={{alignItems:"center"}}>
+                    <View style={{ flexDirection:"column",alignContent:"center",alignItems:"center"}}>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:"center"}}>
                             <Image source={require("../assets/HarukinLogo/Harukin_w.svg")} style={{height: 40,width: 180}}/>
-                            <Text style={{fontSize: 29, color:"white"}} > Apps</Text>
+                            <Text style={{fontSize: 30, color:"white"}} > Apps</Text>
                         </View>
                         <View style={{flex:1}}/>
                     </View>
-                    <View style={{flex:1, flexDirection:"row-reverse"}}/>
+                    <View style={{flex:1,flexDirection:"column",alignItems:"flex-end"}}/>
                 </View>
+                {topCarousel ? 
                 <Carousel
                     layout={"default"}
-                    data={carouselItems}
+                    data={topCarousel}
                     sliderWidth={wp("100%")}
-                    itemWidth={wp("100%") > 800 ? wp("30%") : wp("80%")}
+                    itemWidth={wp("100%") > 800 ? (hp("30%")/9)*16 : wp("80%") }
                     layoutCardOffset={`18`}
-                    renderItem={renderItem}
+                    renderItem={RenderItem}
                     autoplay={'true'}
                     loop={true} />
+                :
+                <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                    <View style={{flex:1}} />
+                    <LottieView ref={LottieRef2} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                    <View style={{flex:1}} />
+                </View>
+                }
+                
             </View>
             <View style={{height:10}}/>
             <Text>真面目に製作中</Text>
@@ -88,7 +107,7 @@ export default function Apps() {
 function ContentsCardBase(){
     CreateCardData.forEach(function(D){
         CardsMain.push(
-            <div style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
+            <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
                 {wp("100%")>800?
                 <Card>
                     <CardItem cardBody button >
@@ -123,7 +142,7 @@ function ContentsCardBase(){
     })
     CreateCardData2.forEach(function(D){
         CardsSub.push(
-            <div style={{width:wp("100%")>800?wp("99%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
+            <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
                 {wp("100%")>800?
                 <Card>
                     <CardItem button cardBody>
