@@ -15,8 +15,6 @@ export default function App() {
   });
 
   const [jrshikokuPage,setJrShikokuPage] = useState();
-  import('./Page/Apps/JRShikoku').then(d=>setJrShikokuPage(d));
-
   const [appsPage,setAppsPage] = useState();
   const [webPage,setWebPage] = useState();
   const [fmPage,setFmPage] = useState();
@@ -26,7 +24,8 @@ export default function App() {
       import('./Page/Apps').then(d=>setAppsPage(d)),
       import('./Page/Web').then(d=>setWebPage(d)),
       import('./Page/Apps/fm').then(d=>setFmPage(d)),
-      import('./TopPage').then(d=>setTopPage(d))
+      import('./TopPage').then(d=>setTopPage(d)),
+      import('./Page/Apps/JRShikoku').then(d=>setJrShikokuPage(d))
     ]).then((value)=>{
       console.log(value)
       
