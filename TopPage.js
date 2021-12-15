@@ -16,8 +16,8 @@ let date = Linking.makeUrl("",{page:"TopPage"});
 import xmlToJSON from 'xmltojson';
 import { csvText_to_json } from './util/csvText_to_json';
 import { RenderItem } from './util/carouselTools';
-
-
+import * as appJson from './app.json';
+import * as packageJson from './package.json';
 //進捗情報ベース
 const 進捗dataAll =[
     {title: "ファミマ揚げ物アプリ", ps:100, additional:null},
@@ -353,10 +353,14 @@ export function TopPageAbout({navigation}){
           LottieRef2?.current.play();
         }catch(e){}
     })
+    console.log(packageJson.default);
     return(
         <View style={{alignItems:"center",position:"relative",height:"auto"}}>
             <Image source={require("./assets/HarukinLogo/Harukin.svg")} style={{height: 50,width: 200}}/>
             <Text>これはReactNativeとExpo、それにReactnavigationを利用して作成されています。</Text>
+            <View style={{padding:10}}>
+                <Text style={{fontSize:20}}>SiteVersion:{appJson.default.expo.version} ExpoVersion:{packageJson.default.dependencies.expo}</Text>
+            </View>
             <View style={{flexDirection:wp("100%") > 800 ? "row" :"column"}} >
                 <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
                     <CardItem bordered>
