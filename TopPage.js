@@ -360,6 +360,7 @@ export function TopPageAbout({navigation}){
             <Text>これはReactNativeとExpo、それにReactnavigationを利用して作成されています。</Text>
             <View style={{padding:10}}>
                 <Text style={{fontSize:20}}>SiteVersion:{appJson.default.expo.version} ExpoVersion:{packageJson.default.dependencies.expo}</Text>
+                <Text style={{fontSize:20}}>GitHub Repository: <a href='https://github.com/harukin0731/harukinsite'>here!</a></Text>
             </View>
             <View style={{flexDirection:wp("100%") > 800 ? "row" :"column"}} >
                 <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
