@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Image, Linking, ScrollView, TouchableOpacity,} from 'react-native';
-import { Card, CardItem, Thumbnail, Icon, Left, Body } from 'native-base';
+import { Card, CardItem, Thumbnail, Icon, Left, Body} from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Entypo } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
@@ -9,13 +9,12 @@ import { csvText_to_json } from '../util/csvText_to_json';
 import { RenderItem } from '../util/carouselTools';
 
 const CardsMain = [];
-const CardsSub = [];
 export default function Web({navigation}) {
     const [topCarousel,setCarousel] = useState(null);
-    const LottieRef = useRef(null);
-    const LottieRef2 = useRef(null);
+    const [cardList,setCardList] = useState(undefined);
+    const LottieRef3 = useRef(null);
+    const LottieRef4 = useRef(null);
     useEffect(()=>{
-        ContentsCardBase();
         fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
         .then(response=>response.text())
         .then(text=>csvText_to_json(text))
@@ -23,9 +22,17 @@ export default function Web({navigation}) {
         .then(data=>setCarousel(data));
     },[])
     useEffect(()=>{
+        fetch("https://nexcloud.haruk.in/s/GQAqKoEmeno3tmP/download/appsList.csv",{mode: "cors"})
+        .then(response=>response.text())
+        .then(text=>csvText_to_json(text))
+        .then(data=>setCardList(data));
+    },[])
+    useEffect(()=>{
         try{
-          LottieRef?.current.play();
-          LottieRef2?.current.play();
+            LottieRef3?.current.play();
+            LottieRef4?.current.play();
+            LottieRef3?.current.loop();
+            LottieRef4?.current.loop();
         }catch(e){}
     })
     return (
@@ -63,7 +70,7 @@ export default function Web({navigation}) {
                 :
                 <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
                     <View style={{flex:1}} />
-                    <LottieView ref={LottieRef2} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                    <LottieView ref={LottieRef3} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
                     <View style={{flex:1}} />
                 </View>
                 }
@@ -72,62 +79,95 @@ export default function Web({navigation}) {
             <View style={{height:10}}/>
             <Text>真面目に製作中</Text>
             <ScrollView horizontal={wp("100%")>800?true:false}>
-            {CardsMain}
+            {cardList ? 
+                cardList.map(v=>{
+                    return (
+                        <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={()=>Linking.openURL(v.url)}>
+                            {wp("100%")>800?
+                            <Card>
+                                <CardItem button cardBody>
+                                    <Image source={v.image} style={{height: 200, width: null, flex: 1}}/>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text>{v.name}</Text>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text>{v.description}</Text>
+                                </CardItem>
+                                <CardItem button footer bordered>
+                                    {DetectOSStatus(v.type)}
+                                </CardItem>
+                            </Card>
+                            :
+                            <Card>
+                                <CardItem button>
+                                    <Left>
+                                        <Thumbnail source={v.image} />
+                                        <View style={{marginLeft:10}}>
+                                            <Text>{v.name}</Text>
+                                            <Text>{v.description}</Text>
+                                            {DetectOSStatus(v.type)}
+                                        </View>
+                                    </Left>
+                                </CardItem>   
+                            </Card>
+                            }
+                        </div>
+                    )
+                })
+                :
+                /* <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                    <View style={{flex:1}} />
+                    <LottieView ref={LottieRef4} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                    <View style={{flex:1}} />
+                </View> */
+                <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} >
+                            {wp("100%")>800?
+                            <Card>
+                                <CardItem button cardBody>
+                                    <View style={{backgroundColor:"white",flex:1,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                                        <View style={{flex:1}} />
+                                        <LottieView ref={LottieRef4} style={{ width: 200, height: 200, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                        <View style={{flex:1}} />
+                                    </View>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text></Text>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text></Text>
+                                </CardItem>
+                                <CardItem button footer bordered>
+                                    <Text>読み込み中....</Text>
+                                </CardItem>
+                            </Card>
+                            :
+                            <Card>
+                                <CardItem button style={{flexDirection:"row"}}>
+                                        <View style={{flex:1}} />
+                                        <View style={{flexDirection:"column"}}>
+                                            <View style={{flex:1}} />
+                                            <LottieView ref={LottieRef4} style={{ width: 100, height: 100, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                            <View style={{flex:1}} />
+                                        </View>
+                                        <View style={{flex:1}} />
+                                </CardItem>
+                            </Card>
+                            }
+                        </div>
+               
+                }
             </ScrollView>
         </View>
     );
 }
 
-function ContentsCardBase(navigation){
-    CreateCard(require("../assets/Apps/HKblankApp.png"), () => Linking.openURL("https://plus.haruk.in"), "Harukin+","OSSのHubzillaを独自にカスタマイズしたGoogle+風Fediverse_SNSです。",1)
-    CreateCard(require("../assets/Apps/HKblankApp.png"), () => Linking.openURL("https://gitlab.haruk.in"), "Gitlab","GithubのようなOSS Gitサーバー、Gitlabです。",1)
-    CreateCard(require("../assets/web/nextcloud.svg"), () => Linking.openURL("https://nexcloud.haruk.in"), "Nexcloud","DropBoxのようなOSSソフトウェア、Nextcloudです。",1)
-    CreateCard(require("../assets/web/mattermost.png"), () => Linking.openURL("https://mattermost.haruk.in"), "Mattermost","SlackのようなOSSソフトウェア、Mattermostです。",1)
-    CreateCard(require("../assets/web/JRSD.jpg"), () => Linking.openURL("https://twitter.com/JRSTraInfoEX"), "JR四国非公式列車遅延情報EX","JR四国の列車遅延を超高速にお伝えするTwitterBOTです。",1)
-}
-
-function CreateCard(image, url, name,description, Status){
-    CardsMain.push(
-        <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={url}>
-            {wp("100%")>800?
-            <Card>
-                <CardItem button cardBody>
-                    <Image source={image} style={{height: 200, width: null, flex: 1}}/>
-                </CardItem>
-                <CardItem button footer>
-                    <Text>{name}</Text>
-                </CardItem>
-                <CardItem button footer>
-                    <Text>{description}</Text>
-                </CardItem>
-                <CardItem button footer bordered>
-                    {DetectOSStatus(Status)}
-                </CardItem>
-            </Card>
-            :
-            <Card>
-                <CardItem button>
-                    <Left>
-                        <Thumbnail source={image} />
-                        <Body>
-                            <Text>{name}</Text>
-                            <Text>{description}</Text>
-                            {DetectOSStatus(Status)}
-                        </Body>
-                    </Left>
-                </CardItem>   
-            </Card>
-            }
-        </div>
-    )
-}
-
 function DetectOSStatus(AS){
     var AT;
     switch(AS){
-        case 0: AT="未公開";break;
-        case 1: AT="一般公開中";break;
-        case 2: AT="一時閉鎖中";break;
+        case '0': AT="未公開";break;
+        case '1': AT="一般公開中";break;
+        case '2': AT="一時閉鎖中";break;
     }
 
     return(

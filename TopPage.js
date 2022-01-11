@@ -100,17 +100,20 @@ export function TopPage({navigation}) {
                     </Left>
                 </CardItem>   
             ));
+        })
+        .catch(e=>{
+            console.log("hogeho")
         });
         fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
         .then(response=>response.text())
         .then(text=>csvText_to_json(text))
         .then(data=>setCarousel(data));
     },[])
-
     useEffect(()=>{
         try{
           LottieRef?.current.play();
           LottieRef2?.current.play();
+          LottieRef?.current.loop()
         }catch(e){}
     })
     return (

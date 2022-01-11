@@ -40,8 +40,7 @@ var CreateCardData2=[
 
 export default function Apps() {
     const [topCarousel,setCarousel] = useState(null);
-    const LottieRef = useRef(null);
-    const LottieRef2 = useRef(null);
+    const LottieRef3 = useRef(null);
     useEffect(()=>{
         ContentsCardBase();
         fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
@@ -52,8 +51,7 @@ export default function Apps() {
     },[])
     useEffect(()=>{
         try{
-          LottieRef?.current.play();
-          LottieRef2?.current.play();
+          LottieRef3?.current.play();
         }catch(e){}
     })
     return (
@@ -91,7 +89,7 @@ export default function Apps() {
                 :
                 <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
                     <View style={{flex:1}} />
-                    <LottieView ref={LottieRef2} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                    <LottieView ref={LottieRef3} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
                     <View style={{flex:1}} />
                 </View>
                 }
