@@ -103,11 +103,11 @@ export default function Web({navigation}) {
                                 <CardItem button>
                                     <Left>
                                         <Thumbnail source={v.image} />
-                                        <View style={{marginLeft:10}}>
+                                        <Body style={{marginLeft:10}}>
                                             <Text>{v.name}</Text>
                                             <Text>{v.description}</Text>
                                             {DetectOSStatus(v.type)}
-                                        </View>
+                                        </Body>
                                     </Left>
                                 </CardItem>   
                             </Card>
