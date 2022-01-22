@@ -107,7 +107,7 @@ export default function Apps() {
                                 <Card>
                                     <CardItem button>
                                         <Left>
-                                            <Thumbnail source={v.image} />
+                                            <Thumbnail source={v.image ? v.image : "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"} />
                                             <Body style={{marginLeft:10}}>
                                                 <Text>{v.name}</Text>
                                                 <Text>{v.description}</Text>
