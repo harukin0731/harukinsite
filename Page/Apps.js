@@ -85,7 +85,15 @@ export default function Apps() {
             <View style={{height:10}}/>
             <View style={{ display: "grid", gridTemplateColumns: wp("100%") > 1200 ? "1fr 1fr 1fr 1fr 1fr" : wp("100%") > 1000 ? "1fr 1fr 1fr 1fr" :wp("100%") > 800 ? "1fr 1fr 1fr" : wp("100%") > 600 ? "1fr 1fr":"1fr",margin:15 }}>
                 {cardList ? 
-                    cardList.map(v=>{
+                    cardList.filter(v=>{
+                        console.log(v)
+                        if(window.localStorage.getItem("rintarnet") == "user"){
+                            return true;
+                        }
+                        else{
+                            return v.limited == "" ? true:false
+                        }
+                    }).map(v=>{
                         return (
                             <div style={{width:"100%",minWidth:200}} onClick={()=>Linking.openURL(EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl)}>
                                 {wp("100%")>600?

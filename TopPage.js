@@ -515,12 +515,17 @@ export function TopPageAbout({navigation}){
 
 export function TopPageStatus({navigation}){
     const [tab,setTab] = useState("harukin");
+    const [count,setCount] = useState(0);
     return(
         <View style={{alignItems:"center",position:"relative",height:"100%"}}>
             <View style={{flexDirection:"row",padding:5,paddingBottom:0,borderBottomColor:"dark",borderBottomWidth:1,width:"100%"}}>
                 <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "harukin" ? 3:0}} onClick={() => setTab("harukin")}>haruk.in</Text>
                 <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "PCGF" ? 3:0}} onClick={() => setTab("PCGF")}>PCGF.io</Text>
-                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:"#46385b",borderBottomWidth:tab == "rintan" ? 3:0}} onClick={() => setTab("rintan")}>rintan.net</Text>
+                <Text style={{flex:1,fontWeight: "bold",textAlign:"center",padding:10,borderBottomColor:count > 10 ? "#00FF18":"#46385b",borderBottomWidth:tab == "rintan" ? 3:0}} onClick={() => {
+                    setTab("rintan");
+                    setCount(count+1);
+                    count > 10 && window.localStorage.setItem("rintarnet", "user");
+                    }}>rintan.net</Text>
             </View>
             <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "harukin" && "none"}}></iframe>
             <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "PCGF" && "none"}}></iframe>
