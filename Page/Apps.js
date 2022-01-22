@@ -9,40 +9,19 @@ import * as RootNavigation from '../RootNavigation.js';
 import { csvText_to_json } from '../util/csvText_to_json.js';
 import { RenderItem } from '../util/carouselTools.js';
 
-const CardsMain = [];
-const CardsSub = [];
-var carouselItems=[
-    {title:"JR四国アプリが更にパワーアップ！",text: "予讃線内経由表示が可能となりました！！詳細はこちらから！",image:require("../assets/news/JRShikoku.png"),URL:"?page=Apps&app_id=JRShikoku"},
-    ];
-
-function  Environment(){
-    if(window.navigator.userAgent.indexOf('iPhone') != -1)return true
-    
-    else if(window.navigator.userAgent.indexOf('iPad')!= -1)return true
-    
-    else return false
+function  EnvironmentNew(){
+    if(window.navigator.userAgent.indexOf('iPhone') != -1)return "ios"
+    else if(window.navigator.userAgent.indexOf('iPad')!= -1)return "ios"
+    else return "android"
     
 }
-var CreateCardData=[
-    {url: () => Linking.openURL("?page=Apps&app_id=JRShikoku"),image:require("../assets/Apps/JRS.png"),title:"JR四国列車運行情報表示アプリ",description:"JR四国の列車運行状況ビューワーです。JR四国公式サイトで公開されているページを表示するだけのアプリになっております。",A:1,i:2},
-    {url: () => Environment() ? Linking.openURL("https://apps.apple.com/us/app/ファミマ店員用揚げ物製作支援アプリ/id1488118221"):Linking.openURL("https://play.google.com/store/apps/details?id=familymart_toolkit.xprocess.hrkn"),image:require("../assets/Apps/fm.png"),title:"ファミマ揚げ物支援アプリ",description:"ファミマでバイトしている人のためのホットスナック製作支援ツールです。ホットスナックを作るタスク管理、時間を簡単に扱うことができます。",A:1,i:1},
-    {url: () => Environment() ? RootNavigation.navigate("404"): Linking.openURL("https://play.google.com/store/apps/details?id=plusclient.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Harukin+クライアント",description:"",A:2,i:0},
-]
-var CreateCardData2=[
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=qsqt.xproject.hrkn"),image:require("../assets/Apps/qsqt.png"),title:"QSQT",description:"",A:1,i:0},
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=atumori.xprocess.hrkn"),image:require("../assets/Apps/atsumori.png"),title:"熱盛",description:"",A:1,i:0},
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=toeicandaken.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ABCDメモ帳",description:"",A:1,i:0},
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=sqm.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"コピってなんでもQあ〜る",description:"",A:1,i:0},
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=mstdn.yzu.org.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"Yづクライアント",description:"",A:1,i:0},
-    {url: () => Environment() ? RootNavigation.navigate("404") : Linking.openURL("https://play.google.com/store/apps/details?id=tanddpay.xprocess.hrkn"),image:require("../assets/Apps/HKblankApp.png"),title:"ファミマ特攻T&D",description:"",A:1,i:0},
-]
-    
 
 export default function Apps() {
     const [topCarousel,setCarousel] = useState(null);
+    const [cardList,setCardList] = useState(undefined);
     const LottieRef3 = useRef(null);
+    const LottieRef4 = useRef(null);
     useEffect(()=>{
-        ContentsCardBase();
         fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv",{mode: "cors"})
         .then(response=>response.text())
         .then(text=>csvText_to_json(text))
@@ -50,8 +29,17 @@ export default function Apps() {
         .then(data=>setCarousel(data));
     },[])
     useEffect(()=>{
+        fetch("https://nexcloud.haruk.in/s/HPSENtDF7fkB378/download/appsList.csv",{mode: "cors"})
+        .then(response=>response.text())
+        .then(text=>csvText_to_json(text))
+        .then(data=>setCardList(data));
+    },[])
+    useEffect(()=>{
         try{
           LottieRef3?.current.play();
+          LottieRef4?.current.play();
+          LottieRef3?.current.loop();
+          LottieRef4?.current.loop();
         }catch(e){}
     })
     return (
@@ -96,106 +84,101 @@ export default function Apps() {
                 
             </View>
             <View style={{height:10}}/>
-            <Text>真面目に製作中</Text>
-            <ScrollView horizontal={wp("100%")>800?true:false}>
-                {CardsMain}
-            </ScrollView>
-            <Text>Tasker製の黒歴史(更新しない)</Text>
-            <ScrollView horizontal={wp("100%")>800?true:false}>
-                {CardsSub}
-            </ScrollView>
+            <View style={{ display: "grid", gridTemplateColumns: wp("100%") > 1200 ? "1fr 1fr 1fr 1fr 1fr" : wp("100%") > 1000 ? "1fr 1fr 1fr 1fr" :wp("100%") > 800 ? "1fr 1fr 1fr" : wp("100%") > 600 ? "1fr 1fr":"1fr",margin:15 }}>
+                {cardList ? 
+                    cardList.map(v=>{
+                        return (
+                            <div style={{width:"100%",minWidth:200}} onClick={()=>Linking.openURL(EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl)}>
+                                {wp("100%")>600?
+                                <Card>
+                                    <CardItem button cardBody>
+                                        <Image source={v.image ? v.image : "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"} style={{height: 200, width: null, flex: 1}}/>
+                                    </CardItem>
+                                    <CardItem button footer>
+                                        <Text>{v.name}</Text>
+                                    </CardItem>
+                                    <CardItem button footer>
+                                        <Text>{v.description}</Text>
+                                    </CardItem>
+                                    <CardItem button footer bordered>
+                                        {DetectOSStatus(v.typeAndroid,v.typeIOS)}
+                                    </CardItem>
+                                </Card>
+                                :
+                                <Card>
+                                    <CardItem button>
+                                        <Left>
+                                            <Thumbnail source={v.image} />
+                                            <Body style={{marginLeft:10}}>
+                                                <Text>{v.name}</Text>
+                                                <Text>{v.description}</Text>
+                                                {DetectOSStatus(v.typeAndroid,v.typeIOS)}
+                                            </Body>
+                                        </Left>
+                                    </CardItem>   
+                                </Card>
+                                }
+                            </div>
+                        )
+                    })
+                    :
+                    <div style={{width:'100%',minWidth:200}} >
+                        {wp("100%")>600?
+                        <Card>
+                            <CardItem button cardBody>
+                                <View style={{backgroundColor:"white",flex:1,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                                    <View style={{flex:1}} />
+                                    <LottieView ref={LottieRef4} style={{ width: 200, height: 200, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                    <View style={{flex:1}} />
+                                </View>
+                            </CardItem>
+                            <CardItem button footer>
+                                <Text></Text>
+                            </CardItem>
+                            <CardItem button footer>
+                                <Text></Text>
+                            </CardItem>
+                            <CardItem button footer bordered>
+                                <Text>読み込み中....</Text>
+                            </CardItem>
+                        </Card>
+                        :
+                        <Card>
+                            <CardItem button style={{flexDirection:"row"}}>
+                                    <View style={{flex:1}} />
+                                    <View style={{flexDirection:"column"}}>
+                                        <View style={{flex:1}} />
+                                        <LottieView ref={LottieRef4} style={{ width: 100, height: 100, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                        <View style={{flex:1}} />
+                                    </View>
+                                    <View style={{flex:1}} />
+                            </CardItem>
+                        </Card>
+                        }
+                    </div>
+                }
+            </View>
         </View>
     );
 }
 
-function ContentsCardBase(){
-    CreateCardData.forEach(function(D){
-        CardsMain.push(
-            <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
-                {wp("100%")>800?
-                <Card>
-                    <CardItem cardBody button >
-                        <Image source={D.image} style={{height: 200, width: null, flex: 1}}/>
-                    </CardItem>
-                    <CardItem button  footer>
-                        <Text>{D.title}</Text>
-                    </CardItem>
-                    <CardItem button  footer>
-                        <Text>{D.description}</Text>
-                    </CardItem>
-                    <CardItem button  footer bordered>
-                        {DetectOSStatus(D.A,D.i)}
-                    </CardItem>
-                </Card>
-                :
-                <Card>
-                    <CardItem button >
-                        <Left>
-                            <Thumbnail source={D.image} />
-                            <Body>
-                                <Text>{D.title}</Text>
-                                <Text>{D.description}</Text>
-                                {DetectOSStatus(D.A,D.i)}
-                            </Body>
-                        </Left>
-                    </CardItem>   
-                </Card>
-                }
-            </div>
-        )
-    })
-    CreateCardData2.forEach(function(D){
-        CardsSub.push(
-            <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={D.url}>
-                {wp("100%")>800?
-                <Card>
-                    <CardItem button cardBody>
-                        <Image source={D.image} style={{height: 200, width: null, flex: 1}}/>
-                    </CardItem>
-                    <CardItem  button footer>
-                        <Text>{D.title}</Text>
-                    </CardItem>
-                    <CardItem  button footer>
-                        <Text>{D.description}</Text>
-                    </CardItem>
-                    <CardItem  button footer bordered>
-                        {DetectOSStatus(D.A,D.i)}
-                    </CardItem>
-                </Card>
-                :
-                <Card>
-                    <CardItem button>
-                        <Left>
-                            <Thumbnail source={D.image} />
-                            <Body>
-                                <Text>{D.title}</Text>
-                                <Text>{D.description}</Text>
-                                {DetectOSStatus(D.A,D.i)}
-                            </Body>
-                        </Left>
-                    </CardItem>   
-                </Card>
-                }
-            </div>
-        )
-    })
-}
 
 
 function DetectOSStatus(AS,iS){
     var AndroidText;
     var iOSText;
-    switch(AS){
+    switch(parseInt(AS)){
         case 0: AndroidText="未開発";break;
         case 1: AndroidText="一般公開中";break;
         case 2: AndroidText="βテスト中";break;
+        case 3: AndroidText="開発終了";break;
     }
-    switch(iS){
+    switch(parseInt(iS)){
         case 0: iOSText="未開発";break;
         case 1: iOSText="一般公開中";break;
         case 2: iOSText="βテスト中";break;
+        case 3: iOSText="開発終了";break;
     }
-
     return(
         <View style={{flexDirection: "row",alignItems:"center"}}>
             <Icon type="Entypo" name="google-play" />
@@ -203,22 +186,6 @@ function DetectOSStatus(AS,iS){
             <Icon type="Entypo" name="app-store" />
             <Text>{iOSText}</Text>
         </View>
-    )
-}
-
-function renderItem({item}){
-    return (
-        <Card style={{backgroundColor:'floralwhite',borderRadius: 5, Height:hp("30%"),justifyContent: "flex-start",flexDirection:"column-reverse"}} onClick={() => Linking.openURL(item.URL)}>
-            <CardItem button cardBody style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}>
-                <Image source={item.image} style={{height: hp("30%"),width: "100%",top:0,position:"absolute"}}/>
-            </CardItem>
-            <CardItem button footer bordered style={{marginTop:"auto"}}>
-                <Text>{item.text}</Text>
-            </CardItem>
-            <CardItem button cardBody style={{marginTop:"auto"}}>
-                <Text style={{fontSize: 20,margin:8}}>{item.title}</Text>
-            </CardItem>
-        </Card>
     )
 }
 
