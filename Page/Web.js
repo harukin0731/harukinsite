@@ -8,8 +8,7 @@ import LottieView from 'react-native-web-lottie';
 import { csvText_to_json } from '../util/csvText_to_json';
 import { RenderItem } from '../util/carouselTools';
 
-const CardsMain = [];
-export default function Web({navigation}) {
+export default function Web() {
     const [topCarousel,setCarousel] = useState(null);
     const [cardList,setCardList] = useState(undefined);
     const LottieRef3 = useRef(null);
