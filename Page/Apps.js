@@ -13,7 +13,6 @@ function  EnvironmentNew(){
     if(window.navigator.userAgent.indexOf('iPhone') != -1)return "ios"
     else if(window.navigator.userAgent.indexOf('iPad')!= -1)return "ios"
     else return "android"
-    
 }
 
 export default function Apps() {
