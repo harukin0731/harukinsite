@@ -78,86 +78,80 @@ export default function Web({navigation}) {
             </View>
             <View style={{height:10}}/>
             <Text>真面目に製作中</Text>
-            <ScrollView horizontal={wp("100%")>800?true:false}>
-            {cardList ? 
-                cardList.map(v=>{
-                    return (
-                        <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} onClick={()=>Linking.openURL(v.url)}>
-                            {wp("100%")>800?
-                            <Card>
-                                <CardItem button cardBody>
-                                    <Image source={v.image} style={{height: 200, width: null, flex: 1}}/>
-                                </CardItem>
-                                <CardItem button footer>
-                                    <Text>{v.name}</Text>
-                                </CardItem>
-                                <CardItem button footer>
-                                    <Text>{v.description}</Text>
-                                </CardItem>
-                                <CardItem button footer bordered>
-                                    {DetectOSStatus(v.type)}
-                                </CardItem>
-                            </Card>
-                            :
-                            <Card>
-                                <CardItem button>
-                                    <Left>
-                                        <Thumbnail source={v.image} />
-                                        <Body style={{marginLeft:10}}>
-                                            <Text>{v.name}</Text>
-                                            <Text>{v.description}</Text>
-                                            {DetectOSStatus(v.type)}
-                                        </Body>
-                                    </Left>
-                                </CardItem>   
-                            </Card>
-                            }
-                        </div>
-                    )
-                })
-                :
-                /* <View style={{backgroundColor:"white",height:wp("100%") > 800 ? hp("30%") : (wp("80%")/16) * 9,width: wp("100%") < 800 ? wp("80%") : (hp("30%")/9) * 16,marginBottom:25,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
-                    <View style={{flex:1}} />
-                    <LottieView ref={LottieRef4} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
-                    <View style={{flex:1}} />
-                </View> */
-                <div style={{width:wp("100%")>800?wp("85%")/4:wp("100%"),minWidth:200}} >
-                            {wp("100%")>800?
-                            <Card>
-                                <CardItem button cardBody>
-                                    <View style={{backgroundColor:"white",flex:1,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+            <View style={{ display: "grid", gridTemplateColumns: wp("100%") > 1200 ? "1fr 1fr 1fr 1fr 1fr" : wp("100%") > 1000 ? "1fr 1fr 1fr 1fr" :wp("100%") > 800 ? "1fr 1fr 1fr" : wp("100%") > 600 ? "1fr 1fr":"1fr",margin:15 }}>
+                {cardList ? 
+                    cardList.map(v=>{
+                        return (
+                            <div style={{width:"100%",minWidth:200}} onClick={()=>Linking.openURL(v.url)}>
+                                {wp("100%")>600?
+                                <Card>
+                                    <CardItem button cardBody>
+                                        <Image source={v.image} style={{height: 200, width: null, flex: 1}}/>
+                                    </CardItem>
+                                    <CardItem button footer>
+                                        <Text>{v.name}</Text>
+                                    </CardItem>
+                                    <CardItem button footer>
+                                        <Text>{v.description}</Text>
+                                    </CardItem>
+                                    <CardItem button footer bordered>
+                                        {DetectOSStatus(v.type)}
+                                    </CardItem>
+                                </Card>
+                                :
+                                <Card>
+                                    <CardItem button>
+                                        <Left>
+                                            <Thumbnail source={v.image} />
+                                            <Body style={{marginLeft:10}}>
+                                                <Text>{v.name}</Text>
+                                                <Text>{v.description}</Text>
+                                                {DetectOSStatus(v.type)}
+                                            </Body>
+                                        </Left>
+                                    </CardItem>   
+                                </Card>
+                                }
+                            </div>
+                        )
+                    })
+                    :
+                    <div style={{width:'100%',minWidth:200}} >
+                        {wp("100%")>600?
+                        <Card>
+                            <CardItem button cardBody>
+                                <View style={{backgroundColor:"white",flex:1,alignItems:"center",alignContent:"center",alignSelf:"center"}}>
+                                    <View style={{flex:1}} />
+                                    <LottieView ref={LottieRef4} style={{ width: 200, height: 200, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                    <View style={{flex:1}} />
+                                </View>
+                            </CardItem>
+                            <CardItem button footer>
+                                <Text></Text>
+                            </CardItem>
+                            <CardItem button footer>
+                                <Text></Text>
+                            </CardItem>
+                            <CardItem button footer bordered>
+                                <Text>読み込み中....</Text>
+                            </CardItem>
+                        </Card>
+                        :
+                        <Card>
+                            <CardItem button style={{flexDirection:"row"}}>
+                                    <View style={{flex:1}} />
+                                    <View style={{flexDirection:"column"}}>
                                         <View style={{flex:1}} />
-                                        <LottieView ref={LottieRef4} style={{ width: 200, height: 200, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
+                                        <LottieView ref={LottieRef4} style={{ width: 100, height: 100, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
                                         <View style={{flex:1}} />
                                     </View>
-                                </CardItem>
-                                <CardItem button footer>
-                                    <Text></Text>
-                                </CardItem>
-                                <CardItem button footer>
-                                    <Text></Text>
-                                </CardItem>
-                                <CardItem button footer bordered>
-                                    <Text>読み込み中....</Text>
-                                </CardItem>
-                            </Card>
-                            :
-                            <Card>
-                                <CardItem button style={{flexDirection:"row"}}>
-                                        <View style={{flex:1}} />
-                                        <View style={{flexDirection:"column"}}>
-                                            <View style={{flex:1}} />
-                                            <LottieView ref={LottieRef4} style={{ width: 100, height: 100, backgroundColor: 'white',}} source={require('../assets/51690-loading-diamonds.json')}/>
-                                            <View style={{flex:1}} />
-                                        </View>
-                                        <View style={{flex:1}} />
-                                </CardItem>
-                            </Card>
-                            }
-                        </div>
-               
+                                    <View style={{flex:1}} />
+                            </CardItem>
+                        </Card>
+                        }
+                    </div>
                 }
-            </ScrollView>
+            </View>
         </View>
     );
 }
