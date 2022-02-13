@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image,  LayoutAnimation,ScrollView,TouchableOpacity,} from 'react-native';
+import { StyleSheet, Text, View, Button, Image,  LayoutAnimation,ScrollView,TouchableOpacity,Clipboard} from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { Platform } from 'react-native';
 import { Accordion,Card, CardItem, Thumbnail, Icon, Left, Body } from 'native-base';
@@ -10,6 +10,7 @@ import Carousel from 'react-native-snap-carousel';
 import * as Linking from "expo-linking";
 import AutoHeightImage from 'react-native-auto-height-image';
 import LottieView from 'react-native-web-lottie';
+//import Clipboard from '@react-native-community/clipboard';
 const Cards = [];
 const 進捗data=[];
 let date = Linking.makeUrl("",{page:"TopPage"});
@@ -337,18 +338,19 @@ function makeContent(item) {
 export function TopPageAbout({navigation}){
     const LottieRef = useRef(null);
     const LottieRef2 = useRef(null);
-    const [twitterData, setTwitterData] = useState();
-    const [fediverseData, setFediverseData] = useState();
+    const [downloadList, setDownloadList] = useState();
     useEffect(()=>{
-        fetch("https://nexcloud.haruk.in/s/sbeq5XFSonJnCJB/download/TwitterAccount.csv",{mode: "cors"})
-        .then(response=>response.text())
-        .then(text=>csvText_to_json(text))
-        .then(data=>setTwitterData(data));
-
-        fetch("https://nexcloud.haruk.in/s/pJeC8scnmNzsQaN/download/FediverseAccount.csv",{mode: "cors"})
-        .then(response=>response.text())
-        .then(text=>csvText_to_json(text))
-        .then(data=>setFediverseData(data));
+        fetch("https://nexcloud.haruk.in/s/oXCNZty3adYEwme/download/AccountSheetList.csv",{mode: "cors"})
+            .then(response=>response.text())
+            .then(text=>csvText_to_json(text))
+            .then(json=>
+                Promise.all(json.map(data=>
+                fetch(data.url,{mode: "cors"})
+                    .then(response=>response.text())
+                    .then(text=>({titleData:data,bodyData:csvText_to_json(text)}))
+                ))
+            )
+            .then((json)=>setDownloadList(json));
     },[])
     useEffect(()=>{
         try{
@@ -366,147 +368,65 @@ export function TopPageAbout({navigation}){
                 <Text style={{fontSize:20}}>GitHub Repository: <a href='https://github.com/harukin0731/harukinsite'>here!</a></Text>
             </View>
             <View style={{flexDirection:wp("100%") > 800 ? "row" :"column"}} >
+                {downloadList ? downloadList.map(data=>{
+                    return(
+                        <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
+                            <CardItem bordered>
+                                <Body style={{flexDirection:"column"}}>
+                                    <View style={{flexDirection:"row",}} >
+                                        <Entypo name={data.titleData.icon} color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
+                                        <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>{data.titleData.name}</Text>  
+                                    </View>
+                                    <Text style={{fontStyle:"italic",fontSize:20}}>{data.titleData.description}</Text>
+                                </Body>
+                            </CardItem>  
+                            {
+                            (()=>{
+                                const typeList = [...new Set(data.bodyData.map(d=>d.type))]
+                                console.log(data.bodyData)
+                                console.log(typeList);
+                                const returnData = typeList.map(tl=>{
+                                    const returnDatabase = data.bodyData.filter(d=>d.type == tl ? true: false);
+                                    return(
+                                        [
+                                        <CardItem bordered>
+                                            <View style={{flexDirection:"row",}} >
+                                                <Entypo name={returnDatabase[0].icon} color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>{tl}</Text>  
+                                            </View>
+                                        </CardItem>, 
+                                        returnDatabase.map(d=>
+                                            <CardItem bordered button onClick={() =>d.url ?  Linking.openURL(d.url) : Clipboard.setString(d.copy)}>
+                                                <Left>
+                                                    <Thumbnail source={d.image} />
+                                                    <Body style={{flexDirection:"column"}}>
+                                                        <View style={{flexDirection:"row"}}>
+                                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                                            <View style={{flex:1}} />
+                                                        </View>
+                                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                                        {d.url ? null : <Text style={{fontStyle:"italic"}}>クリックしてコピーします</Text>}
+                                                    </Body>
+                                                </Left>
+                                            </CardItem>
+                                        )
+                                        ]
+                                    )
+                                })
+                                return(returnData);
+                            })()}
+                        </Card>
+                    )
+                })
+                :
                 <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
-                    <CardItem bordered>
-                        <Body style={{flexDirection:"column"}}>
-                            <View style={{flexDirection:"row",}} >
-                                <Entypo name="twitter" color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Normal Network</Text>  
-                            </View>
-                            <Text style={{fontStyle:"italic",fontSize:20}}>一般サービスアカウント</Text>
-                        </Body>
-                    </CardItem>  
-                    
-                    {twitterData ? 
-                    [<CardItem bordered>
-                        <View style={{flexDirection:"row",}} >
-                            <Entypo name="twitter" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Twitter</Text>  
-                        </View>
-                    </CardItem>,
-                    twitterData.filter(d=>d.type=="Twitter").map(d=>
-                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                            <Left>
-                                <Thumbnail source={d.image} />
-                                <Body style={{flexDirection:"column"}}>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                        <View style={{flex:1}} />
-                                    </View>
-                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                    ),
-                    <CardItem bordered>
-                        <View style={{flexDirection:"row",}} >
-                            <Entypo name="github" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>GitHub / GitLab</Text>  
-                        </View>
-                    </CardItem>,
-                    twitterData.filter(d=>d.type=="Git").map(d=>
-                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                            <Left>
-                                <Thumbnail source={d.image} />
-                                <Body style={{flexDirection:"column"}}>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                        <View style={{flex:1}} />
-                                    </View>
-                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                    ),
-                    <CardItem bordered>
-                        <View style={{flexDirection:"row",}} >
-                            <Entypo name="instagram" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Instagram</Text>  
-                        </View>
-                    </CardItem>,
-                    twitterData.filter(d=>d.type=="Instagram").map(d=>
-                        <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                            <Left>
-                                <Thumbnail source={d.image} />
-                                <Body style={{flexDirection:"column"}}>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                        <View style={{flex:1}} />
-                                    </View>
-                                    <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                    )]
-                    : 
                     <CardItem>
                         <Body style={{flexDirection:"column",alignItems:"center"}}>
-                        <LottieView ref={LottieRef} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
+                            <LottieView ref={LottieRef} style={{ width: 200, height: 200,}} source={require('./assets/51690-loading-diamonds.json')}/>
+                            <Text>読み込み中........!!!</Text>
                         </Body>
                     </CardItem>
-                    }
-                </Card>
-                <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600}}> 
-                    <CardItem bordered>
-                        <Body style={{flexDirection:"column"}}>
-                            <View style={{flexDirection:"row",}} >
-                                <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>Fediverse Network</Text>  
-                            </View>
-                            <Text style={{fontStyle:"italic",fontSize:20}}>分散型ネットワークアカウント</Text>
-                        </Body>
-                    </CardItem>  
-                      
-                    {fediverseData ? [
-                        <CardItem bordered>
-                            <View style={{flexDirection:"row",}} >
-                                <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Mastodon</Text>  
-                            </View>
-                        </CardItem>,
-                        fediverseData.filter(d=>d.type=="Mastodon").map(d=>
-                            <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                                <Left>
-                                    <Thumbnail source={d.image} />
-                                    <Body style={{flexDirection:"column"}}>
-                                        <View style={{flexDirection:"row"}}>
-                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                            <View style={{flex:1}} />
-                                        </View>
-                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                    </Body>
-                                </Left>
-                            </CardItem>
-                        ),
-                        <CardItem bordered>
-                            <View style={{flexDirection:"row",}} >
-                                <Entypo name="network" color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>Pixelfed</Text>  
-                            </View>
-                        </CardItem>,
-                        fediverseData.filter(d=>d.type=="Pixelfed").map(d=>
-                            <CardItem bordered button onClick={() => Linking.openURL(d.url)}>
-                                <Left>
-                                    <Thumbnail source={d.image} />
-                                    <Body style={{flexDirection:"column"}}>
-                                        <View style={{flexDirection:"row"}}>
-                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                            <View style={{flex:1}} />
-                                        </View>
-                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                    </Body>
-                                </Left>
-                            </CardItem>
-                        ),
-                    ]
-                    : 
-                    <CardItem bordered>
-                        <Body style={{flexDirection:"column",alignItems:"center"}}>
-                        <LottieView ref={LottieRef2} style={{ width: 150, height: 150, backgroundColor: 'white',}} source={require('./assets/51690-loading-diamonds.json')}/>
-                        </Body>
-                    </CardItem>
-                    }
-                </Card>    
+                </Card>}
             </View>
             
         </View>
