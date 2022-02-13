@@ -367,9 +367,9 @@ export function TopPageAbout({navigation}){
                 <Text style={{fontSize:20}}>SiteVersion:{appJson.default.expo.version} ExpoVersion:{packageJson.default.dependencies.expo}</Text>
                 <Text style={{fontSize:20}}>GitHub Repository: <a href='https://github.com/harukin0731/harukinsite'>here!</a></Text>
             </View>
-            <View style={{ display: "grid", gridTemplateColumns: downloadList== undefined ? "1fr" : wp("100%") > 1200 ? "1fr 1fr 1fr" : wp("100%") > 800 ? "1fr 1fr":"1fr",margin:15 }} >
+            <View style={{ display: "grid", gridTemplateColumns: downloadList== undefined ? "1fr" : wp("100%") > 1000 ? "1fr 1fr 1fr" : wp("100%") > 800 ? "1fr 1fr":"1fr",margin:15 }} >
                 {downloadList ? downloadList.map(data=>
-                    <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
+                    <Card style={{width:wp("100%") > 1000 ? wp("30%") : wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
                         <CardItem bordered>
                             <Body style={{flexDirection:"column"}}>
                                 <View style={{flexDirection:"row",}} >
