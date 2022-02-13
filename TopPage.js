@@ -367,59 +367,51 @@ export function TopPageAbout({navigation}){
                 <Text style={{fontSize:20}}>SiteVersion:{appJson.default.expo.version} ExpoVersion:{packageJson.default.dependencies.expo}</Text>
                 <Text style={{fontSize:20}}>GitHub Repository: <a href='https://github.com/harukin0731/harukinsite'>here!</a></Text>
             </View>
-            <View style={{flexDirection:wp("100%") > 800 ? "row" :"column"}} >
-                {downloadList ? downloadList.map(data=>{
-                    return(
-                        <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
-                            <CardItem bordered>
-                                <Body style={{flexDirection:"column"}}>
-                                    <View style={{flexDirection:"row",}} >
-                                        <Entypo name={data.titleData.icon} color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
-                                        <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>{data.titleData.name}</Text>  
-                                    </View>
-                                    <Text style={{fontStyle:"italic",fontSize:20}}>{data.titleData.description}</Text>
-                                </Body>
-                            </CardItem>  
-                            {
-                            (()=>{
-                                const typeList = [...new Set(data.bodyData.map(d=>d.type))]
-                                console.log(data.bodyData)
-                                console.log(typeList);
-                                const returnData = typeList.map(tl=>{
-                                    const returnDatabase = data.bodyData.filter(d=>d.type == tl ? true: false);
-                                    return(
-                                        [
-                                        <CardItem bordered>
-                                            <View style={{flexDirection:"row",}} >
-                                                <Entypo name={returnDatabase[0].icon} color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
-                                                <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>{tl}</Text>  
-                                            </View>
-                                        </CardItem>, 
-                                        returnDatabase.map(d=>
-                                            <CardItem bordered button onClick={() =>d.url ?  Linking.openURL(d.url) : Clipboard.setString(d.copy)}>
-                                                <Left>
-                                                    <Thumbnail source={d.image} />
-                                                    <Body style={{flexDirection:"column"}}>
-                                                        <View style={{flexDirection:"row"}}>
-                                                            <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
-                                                            <View style={{flex:1}} />
-                                                        </View>
-                                                        <Text style={{fontStyle:"italic"}}>{d.description}</Text>
-                                                        {d.url ? null : <Text style={{fontStyle:"italic"}}>クリックしてコピーします</Text>}
-                                                    </Body>
-                                                </Left>
-                                            </CardItem>
-                                        )
-                                        ]
+            <View style={{ display: "grid", gridTemplateColumns: downloadList== undefined ? "1fr" : wp("100%") > 1200 ? "1fr 1fr 1fr" : wp("100%") > 800 ? "1fr 1fr":"1fr",margin:15 }} >
+                {downloadList ? downloadList.map(data=>
+                    <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
+                        <CardItem bordered>
+                            <Body style={{flexDirection:"column"}}>
+                                <View style={{flexDirection:"row",}} >
+                                    <Entypo name={data.titleData.icon} color={"#1DA1F2"} style={{margin:5,fontSize:30}}/>
+                                    <Text style={{fontWeight:"bold",margin:5,fontSize:30}}>{data.titleData.name}</Text>  
+                                </View>
+                                <Text style={{fontStyle:"italic",fontSize:20}}>{data.titleData.description}</Text>
+                            </Body>
+                        </CardItem>  
+                        {(()=>{
+                            const typeList = [...new Set(data.bodyData.map(d=>d.type))]
+                            return(typeList.map(tl=>{
+                                const returnDatabase = data.bodyData.filter(d=>d.type == tl ? true: false);
+                                return([
+                                    <CardItem bordered>
+                                        <View style={{flexDirection:"row",}} >
+                                            <Entypo name={returnDatabase[0].icon} color={"#1DA1F2"} style={{margin:5,fontSize:20}}/>
+                                            <Text style={{fontWeight:"bold",margin:5,fontSize:20}}>{tl}</Text>  
+                                        </View>
+                                    </CardItem>, 
+                                    returnDatabase.map(d=>
+                                    <CardItem bordered button onClick={() =>d.url ?  Linking.openURL(d.url) : Clipboard.setString(d.copy)}>
+                                        <Left>
+                                            <Thumbnail source={d.image} />
+                                            <Body style={{flexDirection:"column"}}>
+                                                <View style={{flexDirection:"row"}}>
+                                                    <Text style={{fontWeight:"bold"}}>{d.name}</Text>  
+                                                    <View style={{flex:1}} />
+                                                </View>
+                                                <Text style={{fontStyle:"italic"}}>{d.description}</Text>
+                                                {d.url ? null : <Text style={{fontStyle:"italic"}}>クリックしてコピーします</Text>}
+                                            </Body>
+                                        </Left>
+                                    </CardItem>
                                     )
-                                })
-                                return(returnData);
-                            })()}
-                        </Card>
-                    )
-                })
+                                ])
+                            }));
+                        })()}
+                    </Card>
+                )
                 :
-                <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),maxWidth:600,}}>
+                <Card style={{width:wp("100%") > 800 ? wp("40%") : wp("90%"),}}>
                     <CardItem>
                         <Body style={{flexDirection:"column",alignItems:"center"}}>
                             <LottieView ref={LottieRef} style={{ width: 200, height: 200,}} source={require('./assets/51690-loading-diamonds.json')}/>
