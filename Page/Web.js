@@ -76,44 +76,49 @@ export default function Web() {
                 
             </View>
             <View style={{height:10}}/>
-            <Text>真面目に製作中</Text>
             <View style={{ display: "grid", gridTemplateColumns: wp("100%") > 1200 ? "1fr 1fr 1fr 1fr 1fr" : wp("100%") > 1000 ? "1fr 1fr 1fr 1fr" :wp("100%") > 800 ? "1fr 1fr 1fr" : wp("100%") > 600 ? "1fr 1fr":"1fr",margin:15 }}>
                 {cardList ? 
-                    cardList.map(v=>{
-                        return (
-                            <div style={{width:"100%",minWidth:200}} onClick={()=>Linking.openURL(v.url)}>
-                                {wp("100%")>600?
-                                <Card>
-                                    <CardItem button cardBody>
-                                        <Image source={v.image} style={{height: 200, width: null, flex: 1}}/>
-                                    </CardItem>
-                                    <CardItem button footer>
-                                        <Text>{v.name}</Text>
-                                    </CardItem>
-                                    <CardItem button footer>
-                                        <Text>{v.description}</Text>
-                                    </CardItem>
-                                    <CardItem button footer bordered>
-                                        {DetectOSStatus(v.type)}
-                                    </CardItem>
-                                </Card>
-                                :
-                                <Card>
-                                    <CardItem button>
-                                        <Left>
-                                            <Thumbnail source={v.image} />
-                                            <Body style={{marginLeft:10}}>
-                                                <Text>{v.name}</Text>
-                                                <Text>{v.description}</Text>
-                                                {DetectOSStatus(v.type)}
-                                            </Body>
-                                        </Left>
-                                    </CardItem>   
-                                </Card>
-                                }
-                            </div>
-                        )
-                    })
+                    cardList.filter(v=>{
+                        console.log(v)
+                        if(window.localStorage.getItem("rintarnet") == "user"){
+                            return true;
+                        }
+                        else{
+                            return v.limited == "" ? true:false
+                        }
+                    }).map(v=>
+                        <div style={{width:"100%",minWidth:200}} onClick={()=>Linking.openURL(v.url)}>
+                            {wp("100%")>600?
+                            <Card>
+                                <CardItem button cardBody>
+                                    <Image source={v.image} style={{height: 200, width: null, flex: 1}}/>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text>{v.name}</Text>
+                                </CardItem>
+                                <CardItem button footer>
+                                    <Text>{v.description}</Text>
+                                </CardItem>
+                                <CardItem button footer bordered>
+                                    {DetectOSStatus(v.type)}
+                                </CardItem>
+                            </Card>
+                            :
+                            <Card>
+                                <CardItem button>
+                                    <Left>
+                                        <Thumbnail source={v.image} />
+                                        <Body style={{marginLeft:10}}>
+                                            <Text>{v.name}</Text>
+                                            <Text>{v.description}</Text>
+                                            {DetectOSStatus(v.type)}
+                                        </Body>
+                                    </Left>
+                                </CardItem>   
+                            </Card>
+                            }
+                        </div>
+                    )
                     :
                     <div style={{width:'100%',minWidth:200}} >
                         {wp("100%")>600?
@@ -161,6 +166,7 @@ function DetectOSStatus(AS){
         case '0': AT="未公開";break;
         case '1': AT="一般公開中";break;
         case '2': AT="一時閉鎖中";break;
+        case '3': AT="限定公開中";break;
     }
 
     return(
