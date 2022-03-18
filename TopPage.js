@@ -441,7 +441,7 @@ export function TopPageStatus({navigation}){
             </View>
             <iframe src="https://status.haruk.in/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "harukin" && "none"}}></iframe>
             <iframe src="https://status.pcgf.io/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "PCGF" && "none"}}></iframe>
-            <iframe src="https://status.rintan.net/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "rintan" && "none"}}></iframe>
+            <iframe src="https://status.rintar.net/"title="iframe Example 1" width="100%" height="100%" style={{display:tab != "rintan" && "none"}}></iframe>
         </View>
     )
 }
