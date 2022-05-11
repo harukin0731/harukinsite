@@ -229,11 +229,13 @@ export function TopPage({navigation}) {
                     <View style={{alignItems:"center",flex:wp("100%") > 800 ? 1 : null,width:"100%",padding:wp("100%") > 800 ? 20:5,paddingLeft:wp("100%") > 800 ? 10:null }}>
                         <Card style={{width:"100%"}}>
                             <CardItem header bordered>
-                                <Text style={{fontWeight: "bold"}}>ミニアプリ(テスト中)</Text>
+                                <Text style={{fontWeight: "bold"}}>ミニアプリ</Text>
                             </CardItem> 
                             {banner.map(data=>
-                                <CardItem button cardBody onClick={()=>data.type == "website" ? Linking.openURL(data.url) : navigation.navigate('MiniApps',{address:data.url})}>
-                                    <Image source={data.image || "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"} style={{height: 120, width: null, flex: 1}}/>
+                                <CardItem button cardBody onClick={()=>data.type == "website" ? Linking.openURL(data.url) : navigation.navigate('MiniApps',{data:data})} style={{flexDirection:"column"}}>
+                                    <Image source={data.image || "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"} style={{height: 200, width: 360, flex: 1}}/>
+                                    <Text style={{fontWeight: "bold"}}>{data.name}</Text>
+                                    
                                 </CardItem>    
                             )}
                             
@@ -366,7 +368,8 @@ export function TopPageStatus({navigation}){
 
 export function MiniApps(props){
     const {navigation, route} = props;
-    const {address, icon} = route.params;
+    const {data} = route.params;
+    const {url:address , image, name, description} = data;
     const [loadFrame, setLoadFrame] = useState(undefined);
     return(
         <View style={{alignItems:"center", position:"relative", height:"100%"}}>
@@ -376,8 +379,9 @@ export function MiniApps(props){
                 console.log("読み込み完了")}}></iframe>
             <View style={{alignItems:"center", position:"relative", height:"100%",width:"100%",  display:loadFrame && "none"}} >
                 <View style={{flex:1}} />
-                <AutoHeightImage style={{width:"100%",height:200}} source={require("./assets/PCGF.jpg")} resizeMode='contain'/>
-                <Text>実験中</Text>
+                <AutoHeightImage style={{width:"100%",height:200}} source={{uri: image || "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"}} resizeMode='contain'/>
+                <Text style={{fontSize:30}}>{name}</Text>
+                <Text>{description}</Text>
                 <View style={{flex:1}} />
             </View>
             

@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@babel/helper-environment-visitor": "^7.16.7",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "0.1.6",
