@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image,  LayoutAnimation,ScrollView,TouchableOpacity,Clipboard} from 'react-native';
+import { StyleSheet, Text, View, Button, Image,  LayoutAnimation,ScrollView,TouchableOpacity,Clipboard,UIManager,} from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { Platform } from 'react-native';
 import { Accordion,Card, CardItem, Thumbnail, Icon, Left, Body } from 'native-base';
@@ -11,53 +11,30 @@ import * as Linking from "expo-linking";
 import AutoHeightImage from 'react-native-auto-height-image';
 import LottieView from 'react-native-web-lottie';
 //import Clipboard from '@react-native-community/clipboard';
-const Cards = [];
-const 進捗data=[];
 let date = Linking.makeUrl("",{page:"TopPage"});
 import xmlToJSON from 'xmltojson';
 import { csvText_to_json } from './util/csvText_to_json';
 import { RenderItem } from './util/carouselTools';
 import * as appJson from './app.json';
 import * as packageJson from './package.json';
-//進捗情報ベース
-const 進捗dataAll =[
-    {title: "ファミマ揚げ物アプリ", ps:100, additional:null},
-    {title: "JR四国アプリ",         ps:40,  additional:"JR四国data"},
-    {title: "Harukin+",             ps:20,  additional:"HarukinPlusData"},
-    {title: "このサイト",           ps:25,  additional:"HarukinSiteData"},
-]
-//以下additionalデータ。無効表示になっているがevalで読むので問題無し
-const JR四国data = [
-    { title: "通知対応",                    content: "付近の運行状況に問題がある時通知を送信",  count:20 },
-    { title: "各種オンオフスイッチ実装",    content: "各種機能を有効無効化させるスイッチ",      count:0 },
-    { title: "車番実装",                    content: "各列車に列車の種別方向を表示",            count:70 },
-    ];
-const HarukinPlusData = [
-    { title: "通知対応",                    content: "付近の運行状況に問題がある時通知を送信",  count:0 },
-    { title: "ReactNativeテーマ実装",       content: "全く新しいReactNativeをテーマに採用",     count:0 },
-    { title: "日本語化",                    content: "実用的な日本語翻訳",                      count:90 },
-    { title: "PlusFutureテーマの製作",      content: "Google+をモチーフにしたテーマ製作",       count:60 },
-    ];
-const HarukinSiteData = [
-    { title: "TopPage",                     content: "トップページの製作",                      count:95 },
-    { title: "Apps",                        content: "Appsページの製作",                        count:60 },
-    { title: "Service",                     content: "webサービスページの製作",                 count:0 },
-    { title: "Aboutme",                     content: "連絡先ページの製作",                      count:30 },
-    { title: "Xprocess",                    content: "Xprocessのページの製作",                  count:0 },
-    ];
-
     //メインコンポーネント
     //****************** */
 export function TopPage({navigation}) {
     const [NotiCard,setNotiCard] = useState(null);
     const [NotiCard2,setNotiCard2] = useState(null);
     const [topCarousel,setCarousel] = useState(null);
+    const [banner, setBanner] = useState([]);
     const [blogTab,setBlogTab] = useState("harukin");
     const LottieRef = useRef(null);
     const LottieRef2 = useRef(null);
+    UIManager.setLayoutAnimationEnabledExperimental(true);
     
     useEffect(()=>{
-        ContentsCardBase();
+        fetch("https://nexcloud.haruk.in/s/JdpMcypAMGsdwig/download/banner.csv",{mode: "cors"})
+        .then(response=>response.text())
+        .then(text=>csvText_to_json(text))
+        .then(data=>setBanner(data.filter(d=>d.type != "website")));
+
         fetch("https://blog.haruk.in/index.rdf",{mode: "cors"})
         .then(response=>response.text())
         .then(text=>xmlToJSON.parseString(text))
@@ -252,9 +229,14 @@ export function TopPage({navigation}) {
                     <View style={{alignItems:"center",flex:wp("100%") > 800 ? 1 : null,width:"100%",padding:wp("100%") > 800 ? 20:5,paddingLeft:wp("100%") > 800 ? 10:null }}>
                         <Card style={{width:"100%"}}>
                             <CardItem header bordered>
-                                <Text style={{fontWeight: "bold"}}>製作物進捗状況</Text>
-                            </CardItem>
-                            {進捗data}
+                                <Text style={{fontWeight: "bold"}}>ミニアプリ(テスト中)</Text>
+                            </CardItem> 
+                            {banner.map(data=>
+                                <CardItem button cardBody onClick={()=>data.type == "website" ? Linking.openURL(data.url) : navigation.navigate('MiniApps',{address:data.url})}>
+                                    <Image source={data.image || "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"} style={{height: 120, width: null, flex: 1}}/>
+                                </CardItem>    
+                            )}
+                            
                         </Card>
                     </View>
                 </View>
@@ -264,71 +246,6 @@ export function TopPage({navigation}) {
 }
     //メインコンポーネント
     //****************** */
-
-function ContentsCardBase(){
-    
-    
-    進捗dataAll.forEach(function(進捗){
-        進捗data.push(
-            <View>
-                <CardItem>
-                    <Text>{進捗.title}</Text>
-                </CardItem>
-                {進捗.additional == null ?
-                    <CardItem bordered>
-                        <View style={{height:30,width:"100%"}}>
-                            <Line percent={進捗.ps} strokeWidth="1" strokeColor="#46385b" />
-                            <Text>{進捗.ps}%</Text>
-                        </View>
-                    </CardItem>
-                    :
-                    <View>
-                        <CardItem>
-                            <View style={{height:30,width:"100%"}}>
-                                <Line percent={進捗.ps} strokeWidth="1" strokeColor="#46385b" />
-                                <Text>{進捗.ps}%</Text>
-                            </View>
-                        </CardItem>
-                        <CardItem style={{padding:0,margin:0}} bordered>
-                            <Accordion dataArray={eval(進捗.additional)} animation={true} expanded={true} renderHeader={_renderHeader} renderContent={makeContent} style={{padding:0,marginTop:-20}}/>
-                        </CardItem>
-                    </View>
-                }
-            </View>
-        )
-    })
-}
-
-//アコーディオンの中身を生成する
-function _renderHeader(item, expanded) {
-    return (
-      <View style={{
-        flexDirection: "row",
-        paddingTop: 10,
-        paddingBottom: 10,
-        justifyContent: "space-between",
-        alignItems: "center" ,
-        backgroundColor: "#FFF" }}>
-        <Text>{" "}{item.title}</Text>
-            {expanded ? <Icon style={{ fontSize: 18 }} name="remove-circle" /> : <Icon style={{ fontSize: 18 }} name="add-circle" />}
-      </View>
-    );
-}
-//アイテムとその％を構築
-function makeContent(item) {
-    return (
-        <View>
-            <Text style={{backgroundColor: "#e3f1f1",padding: 10,}}>
-                {item.content}
-            </Text>
-            <View style={{height:30,width:"100%"}}>
-                <Line percent={item.count} strokeWidth="1" strokeColor="#46385b" />
-                <Text>{item.count}%</Text>
-            </View>
-        </View>
-    );
-  }
-
 
 
 
@@ -447,7 +364,30 @@ export function TopPageStatus({navigation}){
 }
 
 
-
+export function MiniApps(props){
+    const {navigation, route} = props;
+    const {address, icon} = route.params;
+    const [loadFrame, setLoadFrame] = useState(undefined);
+    return(
+        <View style={{alignItems:"center", position:"relative", height:"100%"}}>
+            <iframe src={address}title="iframe Example 1" width="100%" height="100%"  style={{display:loadFrame || "none"}}  onLoad={()=>{
+                LayoutAnimation.easeInEaseOut();
+                setLoadFrame(true);
+                console.log("読み込み完了")}}></iframe>
+            <View style={{alignItems:"center", position:"relative", height:"100%",width:"100%",  display:loadFrame && "none"}} >
+                <View style={{flex:1}} />
+                <AutoHeightImage style={{width:"100%",height:200}} source={require("./assets/PCGF.jpg")} resizeMode='contain'/>
+                <Text>実験中</Text>
+                <View style={{flex:1}} />
+            </View>
+            
+            
+            <TouchableOpacity onPress={() => navigation.navigate('トップページ')} style={{position:"absolute", top:0, left:0, padding:10}}>
+                <Entypo name="circle-with-cross" color={"white"} size={25} style={{margin:10}}/>
+            </TouchableOpacity>
+        </View>
+    )
+}
 
 
 var styles = StyleSheet.create({
