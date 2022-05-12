@@ -40,7 +40,7 @@ export default function App() {
         <Stack.Screen name='トップページ' component={TopPage}       options={{headerShown: false}} path="Top"/>
         {TopPageData       && <Stack.Screen name='About'     component={TopPageData.TopPageAbout}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>}
         {TopPageData       && <Stack.Screen name='Status'     component={TopPageData.TopPageStatus}  options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: true, animationEnabled: true }}/>}
-        {TopPageData       && <Stack.Screen name='MiniApps'     component={TopPageData.MiniApps}  options={{...TransitionPresets.RevealFromBottomAndroid ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>}
+        {TopPageData       && <Stack.Screen name='MiniApps'     component={TopPageData.MiniApps}  options={{...TransitionPresets.ScaleFromCenterAndroid ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>}
         <Stack.Screen name='404'          component={Page404}       options={{...TransitionPresets.ModalSlideFromBottomIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: true }}/>
         {webPage        && <Stack.Screen name='Web'          component={webPage.default}           options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: false }}/>}
         {appsPage       && <Stack.Screen name='Apps'         component={appsPage.default}          options={{...TransitionPresets.SlideFromRightIOS ,headerTitleAlign:"center",headerShown: false, animationEnabled: false }}/>}
