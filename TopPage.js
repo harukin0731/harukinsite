@@ -372,7 +372,7 @@ export function MiniApps(props){
     const {url:address , image, name, description} = data;
     const [loadFrame, setLoadFrame] = useState(undefined);
     return(
-        <View style={{alignItems:"center", position:"relative", height:"100%"}}>
+        <View style={{alignItems:"center", position:"relative", height:"100%", overflow:"hidden"}}>
             <iframe src={address}title="iframe Example 1" width="100%" height="100%"  style={{display:loadFrame || "none"}}  onLoad={()=>{
                 LayoutAnimation.easeInEaseOut();
                 setLoadFrame(true);
@@ -387,7 +387,7 @@ export function MiniApps(props){
             
             
             <TouchableOpacity onPress={() => navigation.navigate('トップページ')} style={{position:"absolute", top:0, left:0, padding:10}}>
-                <Entypo name="circle-with-cross" color={"white"} size={25} style={{margin:10}}/>
+                <Entypo name="circle-with-cross" color={"white"} size={"1.5rem"} style={{margin:"0.5rem"}}/>
             </TouchableOpacity>
         </View>
     )
@@ -397,6 +397,7 @@ export function MiniApps(props){
 var styles = StyleSheet.create({
     container: {
       flex: 1,
+      overflowY:"hidden"
     },
     header: {
       backgroundColor: '#fff',
