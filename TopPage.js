@@ -778,6 +778,9 @@ export function MiniApps(props) {
     function (event) {
       console.log("eventListener!");
       console.log(event);
+      console.log(event.origin);
+      console.log(address);
+      console.log(event.data);
       if (event.origin !== address) {
         return;
       }
