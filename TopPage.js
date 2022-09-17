@@ -50,7 +50,6 @@ export function TopPage({ navigation }) {
   const LottieRef = useRef(null);
   const LottieRef2 = useRef(null);
   UIManager.setLayoutAnimationEnabledExperimental(true);
-
   useEffect(() => {
     fetch("https://nexcloud.haruk.in/s/JdpMcypAMGsdwig/download/banner.csv", {
       mode: "cors",
@@ -779,8 +778,11 @@ export function MiniApps(props) {
     function (event) {
       console.log("eventListener!");
       console.log(event);
-      if (event.origin !== "http://www.example.com/") {
+      if (event.origin !== address) {
         return;
+      }
+      if (event.data == "doCloseAction") {
+        navigation.navigate("トップページ");
       }
     },
     false
