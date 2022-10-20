@@ -684,7 +684,23 @@ export function TopPageAbout({ navigation }) {
 
 export function TopPageStatus({ navigation }) {
   const [tab, setTab] = useState("harukin");
+  const [harukin, setHarukin] = useState(true);
+  const [pcgf, setPCGF] = useState(true);
+  const [rintan, setRintan] = useState(true);
   const [count, setCount] = useState(0);
+  const LottieARef = useRef(null);
+  const LottieBRef = useRef(null);
+  const LottieCRef = useRef(null);
+  useEffect(() => {
+    try {
+      LottieARef?.current.play();
+      LottieARef?.current.loop();
+      LottieBRef?.current.play();
+      LottieBRef?.current.loop();
+      LottieCRef?.current.play();
+      LottieCRef?.current.loop();
+    } catch (e) {}
+  });
   return (
     <View
       style={{ alignItems: "center", position: "relative", height: "100%" }}
@@ -711,6 +727,19 @@ export function TopPageStatus({ navigation }) {
           onClick={() => setTab("harukin")}
         >
           haruk.in
+          {harukin && (
+            <LottieView
+              ref={LottieARef}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "#00000000",
+                position: "absolute",
+                top: 10,
+              }}
+              source={require("./assets/51690-loading-diamonds.json")}
+            />
+          )}
         </Text>
         <Text
           style={{
@@ -724,6 +753,19 @@ export function TopPageStatus({ navigation }) {
           onClick={() => setTab("PCGF")}
         >
           PCGF.io
+          {pcgf && (
+            <LottieView
+              ref={LottieBRef}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "#00000000",
+                position: "absolute",
+                top: 10,
+              }}
+              source={require("./assets/51690-loading-diamonds.json")}
+            />
+          )}
         </Text>
         <Text
           style={{
@@ -741,6 +783,19 @@ export function TopPageStatus({ navigation }) {
           }}
         >
           rintan.net
+          {rintan && (
+            <LottieView
+              ref={LottieCRef}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "#00000000",
+                position: "absolute",
+                top: 10,
+              }}
+              source={require("./assets/51690-loading-diamonds.json")}
+            />
+          )}
         </Text>
       </View>
       <iframe
@@ -749,6 +804,11 @@ export function TopPageStatus({ navigation }) {
         width="100%"
         height="100%"
         style={{ display: tab != "harukin" && "none" }}
+        onLoad={() => {
+          LayoutAnimation.easeInEaseOut();
+          setHarukin(false);
+          console.log("読み込み完了");
+        }}
       ></iframe>
       <iframe
         src="https://status.pcgf.io/"
@@ -756,6 +816,11 @@ export function TopPageStatus({ navigation }) {
         width="100%"
         height="100%"
         style={{ display: tab != "PCGF" && "none" }}
+        onLoad={() => {
+          LayoutAnimation.easeInEaseOut();
+          setPCGF(false);
+          console.log("読み込み完了");
+        }}
       ></iframe>
       <iframe
         src="https://status.rintar.net/"
@@ -763,6 +828,11 @@ export function TopPageStatus({ navigation }) {
         width="100%"
         height="100%"
         style={{ display: tab != "rintan" && "none" }}
+        onLoad={() => {
+          LayoutAnimation.easeInEaseOut();
+          setRintan(false);
+          console.log("読み込み完了");
+        }}
       ></iframe>
     </View>
   );
