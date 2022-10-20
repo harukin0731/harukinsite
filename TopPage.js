@@ -47,8 +47,6 @@ export function TopPage({ navigation }) {
   const [topCarousel, setCarousel] = useState(null);
   const [banner, setBanner] = useState([]);
   const [blogTab, setBlogTab] = useState("harukin");
-  const LottieRef = useRef(null);
-  const LottieRef2 = useRef(null);
   UIManager.setLayoutAnimationEnabledExperimental(true);
   useEffect(() => {
     fetch("https://nexcloud.haruk.in/s/JdpMcypAMGsdwig/download/banner.csv", {
@@ -132,13 +130,6 @@ export function TopPage({ navigation }) {
       .then((text) => csvText_to_json(text))
       .then((data) => setCarousel(data));
   }, []);
-  useEffect(() => {
-    try {
-      LottieRef?.current.play();
-      LottieRef2?.current.play();
-      LottieRef?.current.loop();
-    } catch (e) {}
-  });
   return (
     <View style={styles.container}>
       <View
@@ -219,7 +210,8 @@ export function TopPage({ navigation }) {
           >
             <View style={{ flex: 1 }} />
             <LottieView
-              ref={LottieRef2}
+              autoPlay
+              loop
               style={{ width: 150, height: 150, backgroundColor: "white" }}
               source={require("./assets/51690-loading-diamonds.json")}
             />
@@ -423,7 +415,8 @@ export function TopPage({ navigation }) {
                     >
                       <Body style={{ alignItems: "center" }}>
                         <LottieView
-                          ref={LottieRef}
+                          autoPlay
+                          loop
                           style={{
                             width: 150,
                             height: 150,
@@ -444,7 +437,8 @@ export function TopPage({ navigation }) {
                   >
                     <Body style={{ alignItems: "center" }}>
                       <LottieView
-                        ref={LottieRef}
+                        autoPlay
+                        loop
                         style={{
                           width: 150,
                           height: 150,
@@ -504,8 +498,6 @@ export function TopPage({ navigation }) {
 
 //他のページ
 export function TopPageAbout({ navigation }) {
-  const LottieRef = useRef(null);
-  const LottieRef2 = useRef(null);
   const [downloadList, setDownloadList] = useState();
   useEffect(() => {
     fetch(
@@ -528,12 +520,6 @@ export function TopPageAbout({ navigation }) {
       )
       .then((json) => setDownloadList(json));
   }, []);
-  useEffect(() => {
-    try {
-      LottieRef?.current.play();
-      LottieRef2?.current.play();
-    } catch (e) {}
-  });
   console.log(packageJson.default);
   return (
     <View
@@ -668,7 +654,8 @@ export function TopPageAbout({ navigation }) {
             <CardItem>
               <Body style={{ flexDirection: "column", alignItems: "center" }}>
                 <LottieView
-                  ref={LottieRef}
+                  autoPlay
+                  loop
                   style={{ width: 200, height: 200 }}
                   source={require("./assets/51690-loading-diamonds.json")}
                 />
@@ -688,19 +675,6 @@ export function TopPageStatus({ navigation }) {
   const [pcgf, setPCGF] = useState(true);
   const [rintan, setRintan] = useState(true);
   const [count, setCount] = useState(0);
-  const LottieARef = useRef(null);
-  const LottieBRef = useRef(null);
-  const LottieCRef = useRef(null);
-  useEffect(() => {
-    try {
-      LottieARef?.current.play();
-      LottieARef?.current.loop();
-      LottieBRef?.current.play();
-      LottieBRef?.current.loop();
-      LottieCRef?.current.play();
-      LottieCRef?.current.loop();
-    } catch (e) {}
-  });
   return (
     <View
       style={{ alignItems: "center", position: "relative", height: "100%" }}
@@ -729,7 +703,8 @@ export function TopPageStatus({ navigation }) {
           haruk.in
           {harukin && (
             <LottieView
-              ref={LottieARef}
+              autoPlay
+              loop
               style={{
                 width: 25,
                 height: 25,
@@ -755,7 +730,8 @@ export function TopPageStatus({ navigation }) {
           PCGF.io
           {pcgf && (
             <LottieView
-              ref={LottieBRef}
+              autoPlay
+              loop
               style={{
                 width: 25,
                 height: 25,
@@ -785,7 +761,8 @@ export function TopPageStatus({ navigation }) {
           rintan.net
           {rintan && (
             <LottieView
-              ref={LottieCRef}
+              autoPlay
+              loop
               style={{
                 width: 25,
                 height: 25,
