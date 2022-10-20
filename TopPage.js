@@ -481,9 +481,9 @@ export function TopPage({ navigation }) {
                       data.image ||
                       "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview"
                     }
-                    style={{ height: 200, width: 360, flex: 1 }}
+                    style={{ height: 200, width: "100%", flex: 1 }}
                   />
-                  <Text style={{ fontWeight: "bold" }}>{data.name}</Text>
+                  <Text style={{ fontSize: 20 }}>{data.name}</Text>
                 </CardItem>
               ))}
             </Card>
