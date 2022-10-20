@@ -872,6 +872,16 @@ export function MiniApps(props) {
         />
         <Text style={{ fontSize: 30 }}>{name}</Text>
         <Text>{description}</Text>
+        <LottieView
+          autoPlay
+          loop
+          style={{
+            width: 300,
+            height: 200,
+            backgroundColor: "#00000000",
+          }}
+          source={require("./assets/121962-line-loading.json")}
+        />
         <View style={{ flex: 1 }} />
       </View>
 
