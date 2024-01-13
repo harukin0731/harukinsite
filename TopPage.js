@@ -49,7 +49,7 @@ export function TopPage({ navigation }) {
   const [blogTab, setBlogTab] = useState("harukin");
   UIManager.setLayoutAnimationEnabledExperimental(true);
   useEffect(() => {
-    fetch("https://nexcloud.haruk.in/s/JdpMcypAMGsdwig/download/banner.csv", {
+    fetch("https://storage.haruk.in/webpage-resource/banner/banner.csv", {
       mode: "cors",
     })
       .then((response) => response.text())
@@ -123,7 +123,7 @@ export function TopPage({ navigation }) {
       .catch((e) => {
         console.log("hogeho");
       });
-    fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv", {
+    fetch("https://storage.haruk.in/webpage-resource/top-carousel/list.csv", {
       mode: "cors",
     })
       .then((response) => response.text())
@@ -501,7 +501,7 @@ export function TopPageAbout({ navigation }) {
   const [downloadList, setDownloadList] = useState();
   useEffect(() => {
     fetch(
-      "https://nexcloud.haruk.in/s/oXCNZty3adYEwme/download/AccountSheetList.csv",
+      "https://storage.haruk.in/webpage-resource/AccountSheetList.csv",
       { mode: "cors" }
     )
       .then((response) => response.text())

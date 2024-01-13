@@ -23,7 +23,7 @@ export default function Web() {
   const [topCarousel, setCarousel] = useState(null);
   const [cardList, setCardList] = useState(undefined);
   useEffect(() => {
-    fetch("https://nexcloud.haruk.in/s/F9GTFEwnamzkQ5s/download/list.csv", {
+    fetch("https://storage.haruk.in/webpage-resource/top-carousel/list.csv", {
       mode: "cors",
     })
       .then((response) => response.text())
@@ -32,7 +32,7 @@ export default function Web() {
       .then((data) => setCarousel(data));
   }, []);
   useEffect(() => {
-    fetch("https://nexcloud.haruk.in/s/GQAqKoEmeno3tmP/download/appsList.csv", {
+    fetch("https://storage.haruk.in/webpage-resource/webApps/appsList.csv", {
       mode: "cors",
     })
       .then((response) => response.text())
