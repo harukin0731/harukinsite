@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, Linking, ScrollView, TouchableOpacity,} 
 import { Card, CardItem, Icon, Left, Thumbnail, Body } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Entypo } from '@expo/vector-icons';
-import Carousel from 'react-native-snap-carousel';
 import * as RootNavigation from '../../RootNavigation.js';
 
 const CardsMain = [];

@@ -28,12 +28,10 @@ import {
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
 import { Line } from "rc-progress";
-import Carousel from "react-native-snap-carousel";
-import * as Linking from "expo-linking";
-import AutoHeightImage from "react-native-auto-height-image";
+import Carousel from "react-native-reanimated-carousel";
+import * as Linking from 'expo-linking';
 import LottieView from "react-native-web-lottie";
 //import Clipboard from '@react-native-community/clipboard';
-let date = Linking.makeUrl("", { page: "TopPage" });
 import xmlToJSON from "xmltojson";
 import { csvText_to_json } from "./util/csvText_to_json";
 import { RenderItem } from "./util/carouselTools";
@@ -334,11 +332,7 @@ export function TopPage({ navigation }) {
               onClick={() => Linking.openURL("https://pcgf.io")}
             >
               <CardItem cardBody button bordered>
-                <AutoHeightImage
-                  style={{ width: "100%", height: 200 }}
-                  source={require("./assets/PCGF.jpg")}
-                  resizeMode="contain"
-                />
+                <Image source={require("./assets/PCGF.jpg")} style={{ height: 200, width: "100%" }} />
               </CardItem>
               <CardItem
                 cardBody
@@ -863,7 +857,7 @@ export function MiniApps(props) {
         }}
       >
         <View style={{ flex: 1 }} />
-        <AutoHeightImage
+        <Image
           style={{ width: "100%", height: 200 }}
           source={{
             uri: image || "https://nexcloud.haruk.in/s/8H8FfZNHsKFoWDn/preview",
