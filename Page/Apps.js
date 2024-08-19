@@ -14,7 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
-import Carousel from "react-native-snap-carousel";
+import Carousel from "react-native-reanimated-carousel";
 import LottieView from "react-native-web-lottie";
 import * as RootNavigation from "../RootNavigation.js";
 import { csvText_to_json } from "../util/csvText_to_json.js";

@@ -8,7 +8,10 @@ module.exports = async function (env, argv) {
 
   // Create the default config
   const config = await createExpoWebpackConfigAsync(env, argv);
-
+  config.resolve.fallback = {
+    ...config.resolve.fallback,
+    crypto: require.resolve('expo-crypto'),
+};
   if (isEnvProduction) {
     config.plugins.push(
       // Generate a service worker script that will precache, and keep up to date,
