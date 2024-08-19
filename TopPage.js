@@ -54,18 +54,18 @@ export function TopPage({ navigation }) {
       .then((text) => csvText_to_json(text))
       .then((data) => setBanner(data.filter((d) => d.type != "website")));
 
-    fetch("https://blog.haruk.in/index.rdf", { mode: "cors" })
+    fetch("https://blog.haruk.in/rss.xml", { mode: "cors" })
       .then((response) => response.text())
       .then((text) => xmlToJSON.parseString(text))
       .then((results) => {
         console.log("取得完了");
         console.log(results);
-        const NotiDataItems = results.RDF[0].item.map((D) => ({
+        const NotiDataItems = results.rss[0].channel[0].item.map((D) => ({
           title: D.title[0]._text,
-          text: D.description[0]._text,
+          text: D.encoded[0]._text,
           image: require("./assets/HarukinLogo/HarukinPlus_s.png"),
           URL: D.link[0]._text,
-          time: D.date[0]._text,
+          time: D.pubDate[0]._text,
         }));
         setNotiCard(
           NotiDataItems.map((Noti) => (
@@ -86,18 +86,17 @@ export function TopPage({ navigation }) {
           ))
         );
       });
-    fetch("https://diary.pcgf.io/rss/", { mode: "cors" })
-      .then((response) => response.text())
-      .then((text) => xmlToJSON.parseString(text))
+    fetch("https://xprocess.haruk.in/feed.json", { mode: "cors" })
+      .then((response) => response.json())
       .then((results) => {
         console.log("取得完了");
         console.log(results);
-        const NotiDataItems = results.rss[0].channel[0].item.map((D) => ({
-          title: D.title[0]._text,
-          text: D.description[0]._text,
-          image: "https://pcgf.io/wp-content/uploads/2020/12/PCGFロゴ.png",
-          URL: D.link[0]._text,
-          time: D.pubDate[0]._text,
+        const NotiDataItems = results.items.map((D) => ({
+          title: D.title,
+          text: D.content_html,
+          image: "https://xprocess.haruk.in/favicon.jpg",
+          URL: D.url,
+          time: D.date_published,
         }));
         setNotiCard2(
           NotiDataItems.map((Noti) => (
@@ -399,7 +398,7 @@ export function TopPage({ navigation }) {
                     }}
                     onClick={() => NotiCard2 && setBlogTab("PCGF")}
                   >
-                    PCGFダイアリー
+                    Xprocess-Info
                   </Text>
                 </View>
                 {blogTab == "harukin" ? (
