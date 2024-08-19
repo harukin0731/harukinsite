@@ -101,6 +101,7 @@ export default function Web() {
           <Carousel
             layout={"default"}
             data={topCarousel}
+            width={wp("100%")}
             sliderWidth={wp("100%")}
             itemWidth={wp("100%") > 800 ? (hp("30%") / 9) * 16 : wp("80%")}
             layoutCardOffset={`18`}

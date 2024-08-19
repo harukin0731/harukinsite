@@ -29,7 +29,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { Line } from "rc-progress";
 import Carousel from "react-native-reanimated-carousel";
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 import LottieView from "react-native-web-lottie";
 //import Clipboard from '@react-native-community/clipboard';
 import xmlToJSON from "xmltojson";
@@ -187,6 +187,7 @@ export function TopPage({ navigation }) {
           <Carousel
             layout={"default"}
             data={topCarousel}
+            width={wp("100%")}
             sliderWidth={wp("100%")}
             itemWidth={wp("100%") > 800 ? (hp("30%") / 9) * 16 : wp("80%")}
             layoutCardOffset={`18`}
@@ -332,7 +333,10 @@ export function TopPage({ navigation }) {
               onClick={() => Linking.openURL("https://pcgf.io")}
             >
               <CardItem cardBody button bordered>
-                <Image source={require("./assets/PCGF.jpg")} style={{ height: 200, width: "100%" }} />
+                <Image
+                  source={require("./assets/PCGF.jpg")}
+                  style={{ height: 200, width: "100%" }}
+                />
               </CardItem>
               <CardItem
                 cardBody
@@ -494,10 +498,9 @@ export function TopPage({ navigation }) {
 export function TopPageAbout({ navigation }) {
   const [downloadList, setDownloadList] = useState();
   useEffect(() => {
-    fetch(
-      "https://storage.haruk.in/webpage-resource/AccountSheetList.csv",
-      { mode: "cors" }
-    )
+    fetch("https://storage.haruk.in/webpage-resource/AccountSheetList.csv", {
+      mode: "cors",
+    })
       .then((response) => response.text())
       .then((text) => csvText_to_json(text))
       .then((json) =>
