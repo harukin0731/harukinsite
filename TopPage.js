@@ -29,7 +29,6 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { Line } from "rc-progress";
 import Carousel from "react-native-reanimated-carousel";
-import * as Linking from "expo-linking";
 import LottieView from "react-native-web-lottie";
 //import Clipboard from '@react-native-community/clipboard';
 import xmlToJSON from "xmltojson";
@@ -69,7 +68,11 @@ export function TopPage({ navigation }) {
         }));
         setNotiCard(
           NotiDataItems.map((Noti) => (
-            <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
+            <CardItem
+              bordered
+              button
+              onPress={() => (location.href = Noti.URL)}
+            >
               <Left>
                 <Thumbnail source={Noti.image} />
                 <Body style={{ flexDirection: "column" }}>
@@ -100,7 +103,11 @@ export function TopPage({ navigation }) {
         }));
         setNotiCard2(
           NotiDataItems.map((Noti) => (
-            <CardItem bordered button onClick={() => Linking.openURL(Noti.URL)}>
+            <CardItem
+              bordered
+              button
+              onPress={() => (location.href = Noti.URL)}
+            >
               <Left>
                 <Thumbnail source={Noti.image} />
                 <Body style={{ flexDirection: "column" }}>
@@ -232,7 +239,7 @@ export function TopPage({ navigation }) {
                 borderWidth: 1,
                 alignItems: "center",
               }}
-              onClick={() => Linking.openURL("?page=web")}
+              onClick={() => (location.href = "?page=web")}
             >
               <View
                 style={{
@@ -261,7 +268,7 @@ export function TopPage({ navigation }) {
                 borderWidth: 1,
                 alignItems: "center",
               }}
-              onClick={() => Linking.openURL("?page=Apps")}
+              onClick={() => (location.href = "?page=Apps")}
             >
               <View
                 style={{
@@ -290,7 +297,7 @@ export function TopPage({ navigation }) {
                 borderWidth: 1,
                 alignItems: "center",
               }}
-              onClick={() => Linking.openURL("http://blog.haruk.in")}
+              onClick={() => (location.href = "http://blog.haruk.in")}
             >
               <View
                 style={{
@@ -329,7 +336,7 @@ export function TopPage({ navigation }) {
             <Card
               style={{ width: "100%" }}
               button
-              onClick={() => Linking.openURL("https://pcgf.io")}
+              onPress={() => (location.href = "https://pcgf.io")}
             >
               <CardItem cardBody button bordered>
                 <Image
@@ -408,7 +415,7 @@ export function TopPage({ navigation }) {
                     <CardItem
                       bordered
                       button
-                      onClick={() => Linking.openURL(Noti.URL)}
+                      onPress={() => (location.href = Noti.URL)}
                     >
                       <Body style={{ alignItems: "center" }}>
                         <LottieView
@@ -430,7 +437,7 @@ export function TopPage({ navigation }) {
                   <CardItem
                     bordered
                     button
-                    onClick={() => Linking.openURL(Noti.URL)}
+                    onPress={() => (location.href = Noti.URL)}
                   >
                     <Body style={{ alignItems: "center" }}>
                       <LottieView
@@ -466,9 +473,9 @@ export function TopPage({ navigation }) {
                 <CardItem
                   button
                   cardBody
-                  onClick={() =>
+                  onPress={() =>
                     data.type == "website"
-                      ? Linking.openURL(data.url)
+                      ? (location.href = data.url)
                       : navigation.navigate("MiniApps", { data: data })
                   }
                   style={{ flexDirection: "column" }}
@@ -613,9 +620,9 @@ export function TopPageAbout({ navigation }) {
                       <CardItem
                         bordered
                         button
-                        onClick={() =>
+                        onPress={() =>
                           d.url
-                            ? Linking.openURL(d.url)
+                            ? (location.href = d.url)
                             : Clipboard.setString(d.copy)
                         }
                       >

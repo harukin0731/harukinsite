@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Image,
-  Linking,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -64,7 +63,7 @@ export default function Apps() {
           <View style={{ flex: 1, flexDirection: "column" }}>
             <View style={{ flex: 1 }} />
             <TouchableOpacity
-              onPress={() => Linking.openURL(".")}
+              onPress={() => (location.href = "/")}
               style={{ flexDirection: "row", alignItems: "center" }}
             >
               <Entypo
@@ -168,13 +167,9 @@ export default function Apps() {
             })
             .map((v) => {
               return (
-                <div
+                <a
                   style={{ width: "100%", minWidth: 200 }}
-                  onClick={() =>
-                    Linking.openURL(
-                      EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl
-                    )
-                  }
+                  href={EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl}
                 >
                   {wp("100%") > 600 ? (
                     <Card>
@@ -218,7 +213,7 @@ export default function Apps() {
                       </CardItem>
                     </Card>
                   )}
-                </div>
+                </a>
               );
             })
         ) : (
