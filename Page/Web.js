@@ -1,12 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Card, CardItem, Thumbnail, Icon, Left, Body } from "native-base";
 import {
   widthPercentageToDP as wp,

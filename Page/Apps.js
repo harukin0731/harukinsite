@@ -1,12 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Card, CardItem, Thumbnail, Icon, Left, Body } from "native-base";
 import {
   widthPercentageToDP as wp,
@@ -15,7 +8,6 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import Carousel from "react-native-reanimated-carousel";
 import LottieView from "react-native-web-lottie";
-import * as RootNavigation from "../RootNavigation.js";
 import { csvText_to_json } from "../util/csvText_to_json.js";
 import { RenderItem } from "../util/carouselTools.js";
 

@@ -1,33 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   Image,
   LayoutAnimation,
-  ScrollView,
   TouchableOpacity,
   Clipboard,
   UIManager,
 } from "react-native";
-import CollapsibleToolbar from "react-native-collapsible-toolbar";
-import { Platform } from "react-native";
-import {
-  Accordion,
-  Card,
-  CardItem,
-  Thumbnail,
-  Icon,
-  Left,
-  Body,
-} from "native-base";
+import { Card, CardItem, Thumbnail, Left, Body } from "native-base";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
-import { Line } from "rc-progress";
 import Carousel from "react-native-reanimated-carousel";
 import LottieView from "react-native-web-lottie";
 //import Clipboard from '@react-native-community/clipboard';

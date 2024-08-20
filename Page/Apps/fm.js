@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Card, CardItem, Icon, Left, Thumbnail, Body } from "native-base";
 import {
   widthPercentageToDP as wp,
@@ -14,17 +7,6 @@ import {
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
 import * as RootNavigation from "../../RootNavigation.js";
-
-const CardsMain = [];
-const CardsSub = [];
-var carouselItems = [
-  {
-    title: "JR四国アプリが更にパワーアップ！",
-    text: "予讃線内経由表示が可能となりました！！詳細はこちらから！",
-    image: require("../../assets/news/JRShikoku.png"),
-    URL: "JRShikoku",
-  },
-];
 
 export default function fm({ navigation }) {
   return (
@@ -140,47 +122,6 @@ export default function fm({ navigation }) {
   );
 }
 
-function renderItem({ item }) {
-  return (
-    <TouchableOpacity onPress={() => RootNavigation.navigate(item.URL)}>
-      <Card
-        style={{
-          backgroundColor: "floralwhite",
-          borderRadius: 5,
-          Height: hp("30%"),
-          justifyContent: "flex-start",
-          flexDirection: "column-reverse",
-        }}
-      >
-        <CardItem
-          cardBody
-          style={{
-            height: hp("30%"),
-            width: "100%",
-            top: 0,
-            position: "absolute",
-          }}
-        >
-          <Image
-            source={item.image}
-            style={{
-              height: hp("30%"),
-              width: "100%",
-              top: 0,
-              position: "absolute",
-            }}
-          />
-        </CardItem>
-        <CardItem footer bordered style={{ marginTop: "auto" }}>
-          <Text>{item.text}</Text>
-        </CardItem>
-        <CardItem cardBody style={{ marginTop: "auto" }}>
-          <Text style={{ fontSize: 20, margin: 8 }}>{item.title}</Text>
-        </CardItem>
-      </Card>
-    </TouchableOpacity>
-  );
-}
 function DetectOSStatus(AS, iS) {
   var AndroidText;
   var iOSText;
