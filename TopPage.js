@@ -333,22 +333,17 @@ export function TopPage({ navigation }) {
               paddingRight: wp("100%") > 800 ? 10 : null,
             }}
           >
-            <Card
-              style={{ width: "100%" }}
-              button
-              onPress={() => (location.href = "https://pcgf.io")}
-            >
-              <CardItem cardBody button bordered>
-                <Image
-                  source={require("./assets/PCGF.jpg")}
-                  style={{ height: 200, width: "100%" }}
-                />
-              </CardItem>
+            <Card style={{ width: "100%" }} button>
               <CardItem
+                onPress={() => (location.href = "https://pcgf.io")}
                 cardBody
                 button
                 style={{ margin: 10, flexDirection: "column" }}
               >
+                <Image
+                  source={require("./assets/PCGF.jpg")}
+                  style={{ height: 200, width: "100%" }}
+                />
                 <Text>
                   PCGFは学生時代のお金無しが集まったガジェット集団です。現在はOSSを活用したソーシャルサービスの建築や広報活動、ガジェット情報の連絡、MNGなどをしております。
                 </Text>

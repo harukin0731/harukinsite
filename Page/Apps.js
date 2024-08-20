@@ -167,13 +167,16 @@ export default function Apps() {
             })
             .map((v) => {
               return (
-                <a
+                <div
                   style={{ width: "100%", minWidth: 200 }}
-                  href={EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl}
+                  onClick={() =>
+                    (location.href =
+                      EnvironmentNew() == "ios" ? v.iosUrl : v.androidUrl)
+                  }
                 >
                   {wp("100%") > 600 ? (
                     <Card>
-                      <CardItem button cardBody>
+                      <CardItem cardBody>
                         <Image
                           source={
                             v.image
@@ -183,19 +186,19 @@ export default function Apps() {
                           style={{ height: 200, width: null, flex: 1 }}
                         />
                       </CardItem>
-                      <CardItem button footer>
+                      <CardItem footer>
                         <Text>{v.name}</Text>
                       </CardItem>
-                      <CardItem button footer>
+                      <CardItem footer>
                         <Text>{v.description}</Text>
                       </CardItem>
-                      <CardItem button footer bordered>
+                      <CardItem footer bordered>
                         {DetectOSStatus(v.typeAndroid, v.typeIOS)}
                       </CardItem>
                     </Card>
                   ) : (
                     <Card>
-                      <CardItem button>
+                      <CardItem>
                         <Left>
                           <Thumbnail
                             source={
@@ -213,14 +216,14 @@ export default function Apps() {
                       </CardItem>
                     </Card>
                   )}
-                </a>
+                </div>
               );
             })
         ) : (
           <div style={{ width: "100%", minWidth: 200 }}>
             {wp("100%") > 600 ? (
               <Card>
-                <CardItem button cardBody>
+                <CardItem cardBody>
                   <View
                     style={{
                       backgroundColor: "white",
@@ -244,19 +247,19 @@ export default function Apps() {
                     <View style={{ flex: 1 }} />
                   </View>
                 </CardItem>
-                <CardItem button footer>
+                <CardItem footer>
                   <Text></Text>
                 </CardItem>
-                <CardItem button footer>
+                <CardItem footer>
                   <Text></Text>
                 </CardItem>
-                <CardItem button footer bordered>
+                <CardItem footer bordered>
                   <Text>読み込み中....</Text>
                 </CardItem>
               </Card>
             ) : (
               <Card>
-                <CardItem button style={{ flexDirection: "row" }}>
+                <CardItem style={{ flexDirection: "row" }}>
                   <View style={{ flex: 1 }} />
                   <View style={{ flexDirection: "column" }}>
                     <View style={{ flex: 1 }} />

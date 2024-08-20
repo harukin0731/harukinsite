@@ -159,28 +159,31 @@ export default function Web() {
               }
             })
             .map((v) => (
-              <a style={{ width: "100%", minWidth: 200 }} href={v.url}>
+              <div
+                style={{ width: "100%", minWidth: 200 }}
+                onClick={() => (location.href = v.url)}
+              >
                 {wp("100%") > 600 ? (
                   <Card>
-                    <CardItem button cardBody>
+                    <CardItem cardBody>
                       <Image
                         source={v.image}
                         style={{ height: 200, width: null, flex: 1 }}
                       />
                     </CardItem>
-                    <CardItem button footer>
+                    <CardItem footer>
                       <Text>{v.name}</Text>
                     </CardItem>
-                    <CardItem button footer>
+                    <CardItem footer>
                       <Text>{v.description}</Text>
                     </CardItem>
-                    <CardItem button footer bordered>
+                    <CardItem footer bordered>
                       {DetectOSStatus(v.type)}
                     </CardItem>
                   </Card>
                 ) : (
                   <Card>
-                    <CardItem button>
+                    <CardItem>
                       <Left>
                         <Thumbnail source={v.image} />
                         <Body style={{ marginLeft: 10 }}>
@@ -192,13 +195,13 @@ export default function Web() {
                     </CardItem>
                   </Card>
                 )}
-              </a>
+              </div>
             ))
         ) : (
           <div style={{ width: "100%", minWidth: 200 }}>
             {wp("100%") > 600 ? (
               <Card>
-                <CardItem button cardBody>
+                <CardItem cardBody>
                   <View
                     style={{
                       backgroundColor: "white",
@@ -222,19 +225,19 @@ export default function Web() {
                     <View style={{ flex: 1 }} />
                   </View>
                 </CardItem>
-                <CardItem button footer>
+                <CardItem footer>
                   <Text></Text>
                 </CardItem>
-                <CardItem button footer>
+                <CardItem footer>
                   <Text></Text>
                 </CardItem>
-                <CardItem button footer bordered>
+                <CardItem footer bordered>
                   <Text>読み込み中....</Text>
                 </CardItem>
               </Card>
             ) : (
               <Card>
-                <CardItem button style={{ flexDirection: "row" }}>
+                <CardItem style={{ flexDirection: "row" }}>
                   <View style={{ flex: 1 }} />
                   <View style={{ flexDirection: "column" }}>
                     <View style={{ flex: 1 }} />
